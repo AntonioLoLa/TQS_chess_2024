@@ -1,5 +1,13 @@
 package main.model;
 
 public class Player {
-   //ToDo
+    private Color color;
+
+    public Player(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }
