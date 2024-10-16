@@ -20,58 +20,61 @@ class PawnTest {
 
     @Test
     void testPawnDiagonalAttack() {
-        // White pawn attacks black pawn diagonally
-        Square whitePawnSquare = board.getSquare(6, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
-        Square blackPawnSquare = board.getSquare(5, 1);
-        blackPawnSquare.setPiece(new Pawn(Color.BLACK));
+        Square whitePawnSquare = new Square(6, 0, new Pawn(Color.WHITE));
+        Square blackPawnSquare = new Square(5, 1, new Pawn(Color.BLACK));
 
-        assertTrue(board.movePiece(whitePawnSquare, blackPawnSquare), "White pawn should capture black pawn diagonally");
-        assertNull(whitePawnSquare.getPiece(), "Original square should be empty after the move");
-        assertNotNull(blackPawnSquare.getPiece(), "Black pawn's square should now contain the white pawn");
-        assertEquals(Color.WHITE, blackPawnSquare.getPiece().getColor(), "White pawn should be in the new square");
+        board.getSquare(6, 0).setPiece(whitePawnSquare.getPiece());
+        board.getSquare(5, 1).setPiece(blackPawnSquare.getPiece());
+
+        assertTrue(board.movePiece(whitePawnSquare, blackPawnSquare));
+        assertNull(whitePawnSquare.getPiece());
+        assertNotNull(blackPawnSquare.getPiece());
+        assertEquals(Color.WHITE, blackPawnSquare.getPiece().getColor());
     }
 
     @Test
     void testPawnInvalidDiagonalMove() {
-        // White pawn tries to move diagonally to an empty square (invalid)
-        Square whitePawnSquare = board.getSquare(6, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
-        Square emptySquare = board.getSquare(5, 1);
+        Square whitePawnSquare = new Square(6, 0, new Pawn(Color.WHITE));
+        Square emptySquare = new Square(5, 1);
 
-        assertFalse(board.movePiece(whitePawnSquare, emptySquare), "White pawn should not move diagonally to an empty square");
+        board.getSquare(6, 0).setPiece(whitePawnSquare.getPiece());
+        board.getSquare(5, 1).setPiece(emptySquare.getPiece());
+
+        assertFalse(board.movePiece(whitePawnSquare, emptySquare));
     }
 
     @Test
     void testPawnMoveForward() {
-        // White pawn moves forward to an empty square
-        Square whitePawnSquare = board.getSquare(6, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
-        Square forwardSquare = board.getSquare(5, 0);
+        Square whitePawnSquare = new Square(6, 0, new Pawn(Color.WHITE));
+        Square forwardSquare = new Square(5, 0); 
 
-        assertTrue(board.movePiece(whitePawnSquare, forwardSquare), "White pawn should move forward to an empty square");
-        assertNull(whitePawnSquare.getPiece(), "Original square should be empty after the move");
-        assertNotNull(forwardSquare.getPiece(), "Forward square should now contain the white pawn");
+        board.getSquare(6, 0).setPiece(whitePawnSquare.getPiece());
+        board.getSquare(5, 0).setPiece(forwardSquare.getPiece()); 
+
+        assertTrue(board.movePiece(whitePawnSquare, forwardSquare));
+        assertNull(whitePawnSquare.getPiece());
+        assertNotNull(forwardSquare.getPiece());
     }
 
     @Test
     void testPawnCannotMoveBackward() {
-        // White pawn tries to move backward (invalid)
-        Square pawnBehind = board.getSquare(6, 0);
-        Square whitePawnSquare = board.getSquare(5, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
+        Square whitePawnSquare = new Square(5, 0, new Pawn(Color.WHITE)); 
+        Square pawnBehind = new Square(6, 0); 
 
-        assertFalse(board.movePiece(whitePawnSquare, pawnBehind), "White pawn should not move backward");
+        board.getSquare(5, 0).setPiece(whitePawnSquare.getPiece()); 
+        board.getSquare(6, 0).setPiece(pawnBehind.getPiece());
+
+        assertFalse(board.movePiece(whitePawnSquare, pawnBehind));
     }
 
     @Test
     void testPawnCannotCaptureSameColorPiece() {
-        // White pawn tries to capture another white pawn diagonally (invalid)
-        Square blackPawnSquare1 = board.getSquare(2, 0);
-        blackPawnSquare1.setPiece(new Pawn(Color.BLACK));
-        Square blackPawnSquare2 = board.getSquare(3, 1);
-        blackPawnSquare2.setPiece(new Pawn(Color.BLACK));
+        Square blackPawnSquare1 = new Square(3, 1, new Pawn(Color.BLACK));
+        Square blackPawnSquare2 = new Square(4, 0, new Pawn(Color.BLACK));
 
-        assertFalse(board.movePiece(blackPawnSquare1, blackPawnSquare2), "White pawn should not capture a piece of the same color");
+        board.getSquare(3, 1).setPiece(blackPawnSquare1.getPiece()); 
+        board.getSquare(4, 0).setPiece(blackPawnSquare2.getPiece()); 
+
+        assertFalse(board.movePiece(blackPawnSquare1, blackPawnSquare2));
     }
 }

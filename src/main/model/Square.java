@@ -5,10 +5,14 @@ public class Square {
     private int column;
     private Piece piece;
 
-    public Square(int fila, int columna) {
+    public Square(int fila, int columna, Piece piece) {
         this.row = fila;
         this.column = columna;
-        this.piece = null;
+        this.piece = piece;
+    }
+    
+    public Square(int row, int column) {
+        this(row, column, null);
     }
 
     public Piece getPiece() {
