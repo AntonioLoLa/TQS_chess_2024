@@ -16,7 +16,10 @@ public class Square {
     }
 
     public void setPiece(Piece piece) {
-        this.piece = piece;
+    	this.piece = piece;
+        if (piece != null) {
+            piece.setPosition(this);
+        }
     }
 
     public int getRow() {
