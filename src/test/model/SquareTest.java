@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import main.model.Color;
 import main.model.Square;
-import main.model.Piece;
 import main.model.Queen;
 
 class SquareTest {
