@@ -76,6 +76,23 @@ class BoardTest {
         blackPawnSquare = board.getSquare(5, 0);
         blackPawnSquare.setPiece(new Pawn(Color.BLACK));
         assertFalse(board.movePiece(whitePawnSquare, blackPawnSquare));
+        
+        whitePawnSquare = board.getSquare(6, 0);
+        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
+        Square whitePawnSquare2 = board.getSquare(5, 0);
+        whitePawnSquare2.setPiece(new Pawn(Color.WHITE));
+        assertFalse(board.movePiece(whitePawnSquare, whitePawnSquare2));
+        
+        whitePawnSquare = board.getSquare(6, 0);
+        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
+        whitePawnSquare2 = board.getSquare(5, 1);
+        whitePawnSquare2.setPiece(new Pawn(Color.WHITE));
+        assertFalse(board.movePiece(whitePawnSquare, whitePawnSquare2));
+        	//Go back
+        Square pawnBehind = board.getSquare(6, 0);
+        whitePawnSquare = board.getSquare(5, 0);
+        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
+        assertFalse(board.movePiece(whitePawnSquare, pawnBehind));
 
     }
 }
