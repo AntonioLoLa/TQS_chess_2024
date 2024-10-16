@@ -28,6 +28,6 @@ public class Square {
     }
     
     public boolean isOccupied() {
-    	return false;
+    	return piece != null;
     }
 }
