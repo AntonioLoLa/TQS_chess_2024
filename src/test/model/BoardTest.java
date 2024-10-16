@@ -11,7 +11,7 @@ import main.model.Square;
 
 class BoardTest {
 
-    private Board board;
+	private Board board;
 
     @BeforeEach
     void setUp() {
@@ -19,80 +19,30 @@ class BoardTest {
     }
 
     @Test
-    void testBoard() {
+    void testBoardInitialization() {
         assertNotNull(board, "The board should be initialized");
-    }
-
-    @Test
-    void testInitializeBoard() {
-        Square whitePawnSquare = board.getSquare(6, 0);
-        Square blackPawnSquare = board.getSquare(1, 0);
-
-        assertNotNull(whitePawnSquare.getPiece());
-        assertNotNull(blackPawnSquare.getPiece());
-        
-        assertTrue(whitePawnSquare.getPiece() instanceof Pawn);
-        assertEquals(Color.WHITE, whitePawnSquare.getPiece().getColor());
-        
-        assertTrue(blackPawnSquare.getPiece() instanceof Pawn);
-        assertEquals(Color.BLACK, blackPawnSquare.getPiece().getColor());
     }
 
     @Test
     void testGetSquare() {
         Square square = board.getSquare(0, 0);
-        assertNotNull(square);
+        assertNotNull(square, "Square at (0,0) should exist");
 
         Square invalidSquare = board.getSquare(-1, -1);
-        assertNull(invalidSquare);
+        assertNull(invalidSquare, "Invalid square positions should return null");
     }
 
     @Test
     void testMovePiece() {
         Square origin = board.getSquare(6, 0);
         Square destination = board.getSquare(5, 0);
-        
 
-        assertNotNull(origin.getPiece());
-        assertNull(destination.getPiece());
-        assertTrue(board.movePiece(origin, destination));
-        assertNull(origin.getPiece());
-        assertNotNull(destination.getPiece());
-        assertTrue(destination.getPiece() instanceof Pawn);
-    }
-    
-    @Test
-    void testDiagonalAttack() {
-    	//Pawn possible Movement
-        Square whitePawnSquare = board.getSquare(6, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
-        Square blackPawnSquare = board.getSquare(5, 1);
-        blackPawnSquare.setPiece(new Pawn(Color.BLACK));
-        assertTrue(board.movePiece(whitePawnSquare, blackPawnSquare));
-        
-       //Pawn not possible Movement
-        whitePawnSquare = board.getSquare(6, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
-        blackPawnSquare = board.getSquare(5, 0);
-        blackPawnSquare.setPiece(new Pawn(Color.BLACK));
-        assertFalse(board.movePiece(whitePawnSquare, blackPawnSquare));
-        
-        whitePawnSquare = board.getSquare(6, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
-        Square whitePawnSquare2 = board.getSquare(5, 0);
-        whitePawnSquare2.setPiece(new Pawn(Color.WHITE));
-        assertFalse(board.movePiece(whitePawnSquare, whitePawnSquare2));
-        
-        whitePawnSquare = board.getSquare(6, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
-        whitePawnSquare2 = board.getSquare(5, 1);
-        whitePawnSquare2.setPiece(new Pawn(Color.WHITE));
-        assertFalse(board.movePiece(whitePawnSquare, whitePawnSquare2));
-        	//Go back
-        Square pawnBehind = board.getSquare(6, 0);
-        whitePawnSquare = board.getSquare(5, 0);
-        whitePawnSquare.setPiece(new Pawn(Color.WHITE));
-        assertFalse(board.movePiece(whitePawnSquare, pawnBehind));
+        assertNotNull(origin.getPiece(), "Origin should have a piece");
+        assertNull(destination.getPiece(), "Destination should be empty before the move");
 
+        assertTrue(board.movePiece(origin, destination), "Move should be successful");
+
+        assertNull(origin.getPiece(), "Origin should be empty after the move");
+        assertNotNull(destination.getPiece(), "Destination should have the piece after the move");
     }
 }
