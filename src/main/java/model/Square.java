@@ -1,4 +1,4 @@
-package main.model;
+package model;
 
 public class Square {
     private int row;

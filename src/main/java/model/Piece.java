@@ -1,4 +1,4 @@
-package main.model;
+package model;
 
 public abstract class Piece {
     protected Color color;

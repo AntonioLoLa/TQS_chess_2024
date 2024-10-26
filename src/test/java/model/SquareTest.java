@@ -1,12 +1,8 @@
-package test.model;
+package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
-import main.model.Color;
-import main.model.Square;
-import main.model.Queen;
 
 class SquareTest {
 

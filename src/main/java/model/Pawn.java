@@ -1,4 +1,4 @@
-package main.model;
+package model;
 
 public class Pawn extends Piece {
 

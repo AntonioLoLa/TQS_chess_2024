@@ -1,13 +1,9 @@
-package test.model;
+package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.model.Board;
-import main.model.Color;
-import main.model.Pawn;
-import main.model.Square;
 
 class PawnTest {
 
