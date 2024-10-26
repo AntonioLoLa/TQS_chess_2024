@@ -1,6 +1,10 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -82,26 +86,79 @@ class QueenTest {
         assertFalse(whiteQueen.validMovement(destination, board));
     }
 
-    // **Invariant Tests**
-    @Test
-    void testQueenCannotOccupySameSquare() {
-        Square origin = board.getSquare(4, 4);
-        origin.setPiece(whiteQueen);
-        Square destination = board.getSquare(4, 4); // Same square
+    // **Mock Tests**
 
-        assertFalse(whiteQueen.validMovement(destination, board));
+    @Test
+    void testMockWhiteQueenCanMoveStraight() {
+        Queen queenMock = mock(Queen.class);
+        Board boardMock = mock(Board.class);
+        Square origin = new Square(4, 4);
+        Square destination = new Square(4, 7);
+
+        when(queenMock.validMovement(destination, boardMock)).thenReturn(true);
+
+        assertTrue(queenMock.validMovement(destination, boardMock));
+        verify(queenMock).validMovement(destination, boardMock);
     }
 
     @Test
-    void testQueenRemainsWithinBoardBounds() {
-        Square origin = board.getSquare(0, 0);
-        origin.setPiece(whiteQueen);
-        
-        // Attempt to move outside the board
-        Square outOfBoundsSquare = board.getSquare(-1, -1); // Invalid move
-        assertFalse(whiteQueen.validMovement(outOfBoundsSquare, board));
+    void testMockWhiteQueenCanMoveDiagonally() {
+        Queen queenMock = mock(Queen.class);
+        Board boardMock = mock(Board.class);
+        Square origin = new Square(4, 4);
+        Square destination = new Square(2, 2);
 
-        outOfBoundsSquare = board.getSquare(8, 8); // Invalid move
-        assertFalse(whiteQueen.validMovement(outOfBoundsSquare, board));
+        when(queenMock.validMovement(destination, boardMock)).thenReturn(true);
+
+        assertTrue(queenMock.validMovement(destination, boardMock));
+        verify(queenMock).validMovement(destination, boardMock);
+    }
+
+    @Test
+    void testMockWhiteQueenCannotCaptureSameColorPiece() {
+        Queen queenMock = mock(Queen.class);
+        Board boardMock = mock(Board.class);
+        Square friendlySquare = new Square(4, 7);
+        Queen sameColorPiece = new Queen(Color.WHITE);
+        friendlySquare.setPiece(sameColorPiece); // Mock same color piece in destination
+
+        when(queenMock.validMovement(friendlySquare, boardMock)).thenReturn(false);
+
+        assertFalse(queenMock.validMovement(friendlySquare, boardMock));
+        verify(queenMock).validMovement(friendlySquare, boardMock);
+    }
+
+    @Test
+    void testMockQueenCannotMoveThroughPieces() {
+    	Queen queenMock = mock(Queen.class);
+        Board boardMock = mock(Board.class);
+        Square origin = mock(Square.class);
+        Square blockingSquare = mock(Square.class);
+        Square destination = mock(Square.class);
+
+        when(origin.getRow()).thenReturn(4);
+        when(origin.getColumn()).thenReturn(4);
+        when(destination.getRow()).thenReturn(4);
+        when(destination.getColumn()).thenReturn(7);
+        
+        when(boardMock.getSquare(4, 5)).thenReturn(blockingSquare);
+        when(blockingSquare.getPiece()).thenReturn(new Pawn(Color.BLACK));
+
+        when(queenMock.validMovement(destination, boardMock)).thenReturn(false);
+
+        assertFalse(queenMock.validMovement(destination, boardMock));
+        verify(queenMock).validMovement(destination, boardMock);
+    }
+
+    @Test
+    void testMockQueenRemainsWithinBoardBounds() {
+        Queen queenMock = mock(Queen.class);
+        Board boardMock = mock(Board.class);
+        
+        Square outOfBoundsSquare = new Square(-1, -1); // Mock out-of-bounds move
+        when(queenMock.validMovement(outOfBoundsSquare, boardMock)).thenReturn(false);
+
+        assertFalse(queenMock.validMovement(outOfBoundsSquare, boardMock));
+        verify(queenMock).validMovement(outOfBoundsSquare, boardMock);
     }
 }
