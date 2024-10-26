@@ -73,4 +73,31 @@ class PawnTest {
 
         assertFalse(board.movePiece(blackPawnSquare1, blackPawnSquare2));
     }
+    
+    @Test
+    void testPawnFirstMoveDoubleForward() {
+        Square whitePawnSquare = new Square(6, 0, new Pawn(Color.WHITE));
+        Square doubleForwardSquare = new Square(4, 0);
+
+        board.getSquare(6, 0).setPiece(whitePawnSquare.getPiece());
+        board.getSquare(4, 0).setPiece(doubleForwardSquare.getPiece());
+
+        assertTrue(board.movePiece(whitePawnSquare, doubleForwardSquare));
+        assertNull(whitePawnSquare.getPiece());
+        assertNotNull(doubleForwardSquare.getPiece());
+    }
+
+    @Test
+    void testPawnDoubleForwardBlocked() {
+        Square whitePawnSquare = new Square(6, 0, new Pawn(Color.WHITE));
+        Square forwardSquare = new Square(5, 0, new Pawn(Color.WHITE)); // Bloquea el paso
+        Square doubleForwardSquare = new Square(4, 0);
+
+        board.getSquare(6, 0).setPiece(whitePawnSquare.getPiece());
+        board.getSquare(5, 0).setPiece(forwardSquare.getPiece());
+        board.getSquare(4, 0).setPiece(doubleForwardSquare.getPiece());
+
+        assertFalse(board.movePiece(whitePawnSquare, doubleForwardSquare));
+    }
+
 }
