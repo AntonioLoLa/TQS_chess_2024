@@ -1,6 +1,7 @@
 package model;
 
 public class Board {
+	private final int size = 8;
     private Square[][] squares;
 
     public Board() {
@@ -25,12 +26,16 @@ public class Board {
         squares[0][3].setPiece(new Queen(Color.BLACK)); // Black queen
         squares[7][3].setPiece(new Queen(Color.WHITE)); // White queen
     }
+    
+    public int getSize() {
+        return size;
+    }
 
     public Square getSquare(int row, int column) {
-        if (row >= 0 && row < 8 && column >= 0 && column < 8) {
-            return squares[row][column];
+        if (row < 0 || row >= size || column < 0 || column >= size) {
+            return null; // or throw an exception
         }
-        return null;
+        return squares[row][column];
     }
 
     public boolean movePiece(Square origin, Square destination) {

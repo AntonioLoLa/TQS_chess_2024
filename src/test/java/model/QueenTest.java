@@ -1,10 +1,8 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 class QueenTest {
 
@@ -19,89 +17,91 @@ class QueenTest {
         blackQueen = new Queen(Color.BLACK);
     }
 
-   @Test
-    void blackQueen() {
-        Square origin = board.getSquare(4, 4);
-        origin.setPiece(whiteQueen);
-        Square destination = board.getSquare(4, 7);
-
-        assertTrue(whiteQueen.validMovement(destination, board));
-    }
-
-
+    // **Black Box Tests**
+    
     @Test
-    void testQueenDiagonalMove() {
+    void testWhiteQueenCanMoveStraight() {
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
-        Square destination = board.getSquare(2, 2);
+        Square destination = board.getSquare(4, 7); // Move straight right
 
         assertTrue(whiteQueen.validMovement(destination, board));
     }
 
     @Test
-    void testQueenCaptureEnemyPiece() {
+    void testWhiteQueenCanMoveDiagonally() {
+        Square origin = board.getSquare(4, 4);
+        origin.setPiece(whiteQueen);
+        Square destination = board.getSquare(2, 2); // Move diagonally
+
+        assertTrue(whiteQueen.validMovement(destination, board));
+    }
+
+    @Test
+    void testWhiteQueenCanCaptureBlackQueen() {
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
         Square enemySquare = board.getSquare(4, 7);
-        enemySquare.setPiece(blackQueen);
+        enemySquare.setPiece(blackQueen); // Place a black queen to capture
 
         assertTrue(whiteQueen.validMovement(enemySquare, board));
     }
 
     @Test
-    void testQueenCannotCaptureSameColorPiece() {
+    void testWhiteQueenCannotCaptureSameColorPiece() {
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
         Square friendlySquare = board.getSquare(4, 7);
-        friendlySquare.setPiece(whiteQueen);
+        friendlySquare.setPiece(new Queen(Color.WHITE)); // Another white queen
+
         // Piece of the same color, so invalid movement
         assertFalse(whiteQueen.validMovement(friendlySquare, board));
     }
-    
+
+    // **White Box Tests**
     
     @Test
-    void testQueenInteractionWithBoardUsingMock() {
-        // Creating Queen Mock
-        Queen queenMock = mock(Queen.class);
-        Square origin = new Square(4, 4);
-        Square destination = new Square(4, 7);
+    void testQueenCannotMoveThroughPieces() {
+        Square origin = board.getSquare(4, 4);
+        origin.setPiece(whiteQueen);
+        Square blockingSquare = board.getSquare(4, 5);
+        blockingSquare.setPiece(new Pawn(Color.BLACK)); // Blocked by a pawn
+        Square destination = board.getSquare(4, 7); // Attempting to move straight
 
-        when(queenMock.validMovement(destination, board)).thenReturn(true);
-
-        // Verify that the mock behaves as expected
-        assertTrue(queenMock.validMovement(destination, board));
-        verify(queenMock).validMovement(destination, board);
+        assertFalse(whiteQueen.validMovement(destination, board));
     }
 
     @Test
-    void testMockQueenCanCaptureEnemyPiece() {
-        // Mocking the Queen
-        Queen queenMock = mock(Queen.class);
+    void testQueenCannotMoveDiagonallyThroughPieces() {
         Square origin = board.getSquare(4, 4);
-        origin.setPiece(queenMock);
-        Square enemySquare = board.getSquare(4, 7);
-        enemySquare.setPiece(blackQueen); // Place a black queen
+        origin.setPiece(whiteQueen);
+        Square blockingSquare = board.getSquare(3, 5);
+        blockingSquare.setPiece(new Pawn(Color.BLACK)); // Blocked by a pawn
+        Square destination = board.getSquare(2, 6); // Attempting diagonal move
 
-        // Mocking the validMovement method
-        when(queenMock.validMovement(enemySquare, board)).thenReturn(true);
-        
-        assertTrue(queenMock.validMovement(enemySquare, board)); // Assert movement
-        verify(queenMock).validMovement(enemySquare, board); // Verify method call
+        assertFalse(whiteQueen.validMovement(destination, board));
+    }
+
+    // **Invariant Tests**
+    @Test
+    void testQueenCannotOccupySameSquare() {
+        Square origin = board.getSquare(4, 4);
+        origin.setPiece(whiteQueen);
+        Square destination = board.getSquare(4, 4); // Same square
+
+        assertFalse(whiteQueen.validMovement(destination, board));
     }
 
     @Test
-    void testMockQueenCannotCaptureSameColorPiece() {
-        // Mocking the Queen
-        Queen queenMock = mock(Queen.class);
-        Square origin = board.getSquare(4, 4);
-        origin.setPiece(queenMock);
-        Square friendlySquare = board.getSquare(4, 7);
-        friendlySquare.setPiece(whiteQueen); // Another white queen
-
-        // Mocking the validMovement method to return false
-        when(queenMock.validMovement(friendlySquare, board)).thenReturn(false);
+    void testQueenRemainsWithinBoardBounds() {
+        Square origin = board.getSquare(0, 0);
+        origin.setPiece(whiteQueen);
         
-        assertFalse(queenMock.validMovement(friendlySquare, board)); // Assert cannot capture
-        verify(queenMock).validMovement(friendlySquare, board); // Verify method call
+        // Attempt to move outside the board
+        Square outOfBoundsSquare = board.getSquare(-1, -1); // Invalid move
+        assertFalse(whiteQueen.validMovement(outOfBoundsSquare, board));
+
+        outOfBoundsSquare = board.getSquare(8, 8); // Invalid move
+        assertFalse(whiteQueen.validMovement(outOfBoundsSquare, board));
     }
 }
