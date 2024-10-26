@@ -8,7 +8,9 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean validMovement(Square destination, Board board) {
-		assert destination != null : "Destination cannot be null.";
+		if (destination == null) {
+            return false; // Return false for out-of-bounds
+        }
 
         // Invariants to ensure destination is within bounds of the board
         assert destination.getRow() >= 0 && destination.getRow() < board.getSize() :
