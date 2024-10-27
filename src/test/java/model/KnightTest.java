@@ -45,5 +45,27 @@ class KnightTest {
 
         assertFalse(whiteKnight.validMovement(outOfBoundsSquare, board));
     }
+    
+ // **White Box Tests**
+
+    @Test
+    void testWhiteBoxCanCaptureBlackKnight() {
+        Square origin = board.getSquare(4, 4);
+        origin.setPiece(whiteKnight);
+        Square enemySquare = board.getSquare(6, 5);
+        enemySquare.setPiece(blackKnight); 
+
+        assertTrue(whiteKnight.validMovement(enemySquare, board));
+    }
+
+    @Test
+    void testWhiteBoxCannotCaptureSameColorPiece() {
+        Square origin = board.getSquare(4, 4);
+        origin.setPiece(whiteKnight);
+        Square friendlySquare = board.getSquare(6, 5);
+        friendlySquare.setPiece(new Knight(Color.WHITE));
+
+        assertFalse(whiteKnight.validMovement(friendlySquare, board));
+    }
 
 }
