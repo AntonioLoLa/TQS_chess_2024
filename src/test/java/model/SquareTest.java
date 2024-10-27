@@ -11,6 +11,7 @@ class SquareTest {
         Square testSquare = new Square(3,4);
         assertEquals(3, testSquare.getRow());
         assertEquals(4, testSquare.getColumn());
+        assertNull(testSquare.getPiece());
     }
 
 	@Test
