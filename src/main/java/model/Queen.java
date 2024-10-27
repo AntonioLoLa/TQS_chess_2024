@@ -13,10 +13,10 @@ public class Queen extends Piece {
         }
     	
         // Invariant: The destination must be within the bounds of the board
-        assert destination.getRow() >= 0 && destination.getRow() < board.getSize() :
-               "Destination row is out of bounds.";
-        assert destination.getColumn() >= 0 && destination.getColumn() < board.getSize() :
-               "Destination column is out of bounds.";
+    	if ((destination.getRow() < 0 || destination.getRow() >= board.getSize()) && destination.getColumn() < 0 || 
+				destination.getColumn() >= board.getSize()) {
+		    return false;
+		}
 
         int rowDelta = Math.abs(destination.getRow() - this.position.getRow());
         int colDelta = Math.abs(destination.getColumn() - this.position.getColumn());
@@ -46,18 +46,17 @@ public class Queen extends Piece {
             }
 
             // Check invariants at the end of the method
-            checkInvariants();
+            if(!checkInvariants()) {
+            	return false;
+            }
             return true; // Movement is valid
         }
 
-        // Check invariants at the end of the method
-        checkInvariants();
         return false; // Movement is invalid
     }
 
     // Invariant check method
-    private void checkInvariants() {
-        assert this.color != null : "Queen color cannot be null.";
-        // Additional invariants can be checked here
+    private boolean checkInvariants() {
+        return this.color != null ? true : false;
     }
 }

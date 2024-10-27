@@ -171,32 +171,16 @@ class PawnTest {
     }
     
     @Test
-    void testOutOfBoundRow() {
+    void testOutOfBound() {
         Square start = board.getSquare(1, 0);
         start.setPiece(new Pawn(Color.BLACK));
         Square outOfBoundsDestinationRow = new Square(9, 0);
-
-        //AssertionError
-        assertThrows(AssertionError.class, () -> {
-            start.getPiece().validMovement(outOfBoundsDestinationRow, board);
-        }, "Expected an AssertionError for out-of-bound row.");
-    }
-
-    @Test
-    void testOutOfBoundColumn() {
-        Square start = board.getSquare(1, 0);
-        start.setPiece(new Pawn(Color.BLACK));
+        Square outOfBoundsDestinationRow2 = new Square(8, -1);
         Square outOfBoundsDestinationColumn = new Square(0, 9);
-
-        //AssertionError
-        assertThrows(AssertionError.class, () -> {
-            start.getPiece().validMovement(outOfBoundsDestinationColumn, board);
-        }, "Expected an AssertionError for out-of-bound column.");
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 8);
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
     }
-
-    
-   
-    
-    
-
 }

@@ -8,15 +8,15 @@ public class Bishop extends Piece {
 
     @Override
     public boolean validMovement(Square destination, Board board) {
-        if (destination == null) {
+        if (destination == null) {   	
             return false;
         }
 
         // Invariant
-        assert destination.getRow() >= 0 && destination.getRow() < board.getSize() :
-               "Destination row is out of bounds.";
-        assert destination.getColumn() >= 0 && destination.getColumn() < board.getSize() :
-               "Destination column is out of bounds.";
+        if ((destination.getRow() < 0 || destination.getRow() >= board.getSize()) && destination.getColumn() < 0 || 
+				destination.getColumn() >= board.getSize()) {
+		    return false;
+		}
 
         int rowDelta = Math.abs(destination.getRow() - this.position.getRow());
         int colDelta = Math.abs(destination.getColumn() - this.position.getColumn());
@@ -45,16 +45,20 @@ public class Bishop extends Piece {
             }
 
             
-            checkInvariants();
+            if(!checkInvariants()) {
+            	return false;
+            }
             return true;
         }
 
-        checkInvariants();
+        if(!checkInvariants()) {
+        	return false;
+        }
         return false;
     }
 
     // Invariant check method
-    private void checkInvariants() {
-        assert this.color != null : "Bishop color cannot be null.";
+    private boolean checkInvariants() {
+        return this.color != null ? true : false;
     }
 }

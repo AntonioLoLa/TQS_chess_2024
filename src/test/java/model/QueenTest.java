@@ -60,6 +60,10 @@ class QueenTest {
 
         // Piece of the same color, so invalid movement
         assertFalse(whiteQueen.validMovement(friendlySquare, board));
+        
+        Square start = board.getSquare(4, 4);
+        start.setPiece(new Queen(null));
+        assertFalse(start.getPiece().validMovement(friendlySquare, board));
     }
 
     // **White Box Tests**
@@ -84,6 +88,42 @@ class QueenTest {
         Square destination = board.getSquare(2, 6); // Attempting diagonal move
 
         assertFalse(whiteQueen.validMovement(destination, board));
+    }
+    
+    @Test
+    void testBlackQueenCannotMoveToASpecificPosition() {
+        Square start = board.getSquare(5, 0);
+        start.setPiece(new Queen(Color.BLACK));
+        Square destination = board.getSquare(3, 7);
+        destination.setPiece(new Queen(Color.BLACK));
+        assertFalse(start.getPiece().validMovement(destination, board));
+        Square destination2 = board.getSquare(3, 7);
+        destination2.setPiece(new Queen(null));
+        assertFalse(start.getPiece().validMovement(destination2, board));
+    }
+    
+    @Test
+    void testBishopCannotMoveInvalidPosition() {
+    	Square start = board.getSquare(1, 0);
+    	start.setPiece(whiteQueen);
+    	Square invalid = board.getSquare(-1, 0); // Fuera del límite
+        assertFalse(start.getPiece().validMovement(invalid, board));
+    }
+    
+    @Test
+    void testOutOfBound() {
+        Square start = board.getSquare(1, 0);
+        start.setPiece(new Queen(Color.BLACK));
+        Square outOfBoundsDestinationRow = new Square(9, 0);
+        Square outOfBoundsDestinationRow2 = new Square(8, -1);
+        Square outOfBoundsDestinationColumn = new Square(0, 9);
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 8);
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
+        start.setPiece(new Queen(null));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
     }
 
     // **Mock Tests**

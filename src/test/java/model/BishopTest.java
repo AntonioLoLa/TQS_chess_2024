@@ -60,6 +60,10 @@ class BishopTest {
 
         // Same color piece at destination, so invalid movement
         assertFalse(whiteBishop.validMovement(friendlySquare, board));
+        
+        Square start = board.getSquare(4, 4);
+        start.setPiece(new Bishop(null));
+        assertFalse(start.getPiece().validMovement(friendlySquare, board));
     }
 
     // **White Box Tests**
@@ -87,6 +91,30 @@ class BishopTest {
         // Attempt vertical move
         Square verticalDestination = board.getSquare(7, 4);
         assertFalse(whiteBishop.validMovement(verticalDestination, board));
+    }
+    
+    @Test
+    void testBishopCannotMoveInvalidPosition() {
+    	Square start = board.getSquare(1, 0);
+    	start.setPiece(whiteBishop);
+    	Square invalid = board.getSquare(-1, 0); // Fuera del límite
+        assertFalse(start.getPiece().validMovement(invalid, board));
+    }
+    
+    @Test
+    void testOutOfBound() {
+        Square start = board.getSquare(1, 0);
+        start.setPiece(new Bishop(Color.BLACK));
+        Square outOfBoundsDestinationRow = new Square(9, 0);
+        Square outOfBoundsDestinationRow2 = new Square(8, -1);
+        Square outOfBoundsDestinationColumn = new Square(0, 9);
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 8);
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
+        start.setPiece(new Bishop(null));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
     }
 
     // **Tests using Mocks**

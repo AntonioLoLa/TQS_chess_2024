@@ -13,10 +13,11 @@ public class Pawn extends Piece {
         }
 
         // Invariants to ensure destination is within bounds of the board
-        assert destination.getRow() >= 0 && destination.getRow() < board.getSize() :
-               "Destination row is out of bounds.";
-        assert destination.getColumn() >= 0 && destination.getColumn() < board.getSize() :
-               "Destination column is out of bounds.";
+		if ((destination.getRow() < 0 || destination.getRow() >= board.getSize()) && destination.getColumn() < 0 || 
+				destination.getColumn() >= board.getSize()) {
+		    return false;
+		}
+
         
         // Basic logic for pawn movement (only forward, or diagonal attack)
         int rowDelta = destination.getRow() - this.position.getRow();
