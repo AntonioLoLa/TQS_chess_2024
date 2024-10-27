@@ -1,10 +1,6 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +20,15 @@ class RookTest {
     // **Black Box Tests**
     
     @Test
+    void testWhiteRookCanMoveStraightVertically() {
+        Square origin = board.getSquare(4, 4);
+        origin.setPiece(whiteRook);
+        Square destination = board.getSquare(7, 4); // Move straight down
+
+        assertTrue(whiteRook.validMovement(destination, board));
+    }
+    
+    @Test
     void testWhiteRookCanMoveStraightHorizontally() {
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteRook);
@@ -32,14 +37,7 @@ class RookTest {
         assertTrue(whiteRook.validMovement(destination, board));
     }
 
-    @Test
-    void testWhiteRookCanMoveStraightVertically() {
-        Square origin = board.getSquare(4, 4);
-        origin.setPiece(whiteRook);
-        Square destination = board.getSquare(7, 4); // Move straight down
-
-        assertTrue(whiteRook.validMovement(destination, board));
-    }
+    
 
     // **White Box Tests**
     
