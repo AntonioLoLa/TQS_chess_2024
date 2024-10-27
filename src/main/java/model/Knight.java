@@ -25,8 +25,11 @@ public class Knight extends Piece {
         if ((rowDelta == 2 && colDelta == 1) || (rowDelta == 1 && colDelta == 2)) {
             Piece destinationPiece = destination.getPiece();
 
-            // TODO: check same color
-            
+            // Check if destination has a piece of the same color
+            if (destinationPiece != null && destinationPiece.getColor() == this.color) {
+                return false; // Cannot capture a friendly piece
+            }
+
             return checkInvariants();
         }
 
