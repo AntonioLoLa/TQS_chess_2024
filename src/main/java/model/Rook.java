@@ -9,11 +9,11 @@ public class Rook extends Piece {
     @Override
     public boolean validMovement(Square destination, Board board) {
         if (destination == null) {
-            return false; // Return false for out-of-bounds
+            return false; // out-of-bounds
         }
 
         // Invariant: The destination must be within the bounds of the board
-        if ((destination.getRow() < 0 || destination.getRow() >= board.getSize()) || destination.getColumn() < 0 || 
+        if ((destination.getRow() < 0 || destination.getRow() >= board.getSize()) && destination.getColumn() < 0 || 
                 destination.getColumn() >= board.getSize()) {
             return false;
         }
