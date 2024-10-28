@@ -37,6 +37,15 @@ class KingTest {
 
         assertFalse(whiteKing.validMovement(destination, board));
     }
+    
+    @Test
+    void testBlackKingCannotMoveToSamePosition() {
+        Square origin = board.getSquare(4, 4);
+        origin.setPiece(blackKing);
+        Square destination = board.getSquare(4, 4); // Attempt to move two squares
+
+        assertFalse(blackKing.validMovement(destination, board));
+    }
 
     @Test
     void testWhiteKingCanCaptureBlackPiece() {
@@ -49,13 +58,13 @@ class KingTest {
     }
 
     @Test
-    void testWhiteKingCannotCaptureSameColorPiece() {
+    void testBlackKingCannotCaptureSameColorPiece() {
         Square origin = board.getSquare(4, 4);
-        origin.setPiece(whiteKing);
+        origin.setPiece(blackKing);
         Square friendlySquare = board.getSquare(5, 5);
-        friendlySquare.setPiece(new King(Color.WHITE)); // Another white king
+        friendlySquare.setPiece(new King(Color.BLACK)); // Another white king
 
-        assertFalse(whiteKing.validMovement(friendlySquare, board));
+        assertFalse(blackKing.validMovement(friendlySquare, board));
         
         Square start = board.getSquare(4, 4);
         start.setPiece(new King(null));
