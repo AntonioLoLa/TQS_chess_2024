@@ -24,7 +24,7 @@ class GameTest {
         assertFalse(game.makeMove(6, 0, -1, 0), "Move should be invalid: outside of bounds.");
     }
 	
-	 @Test
+	@Test
 	    void testGameOverWhenBlackKingIsCaptured() {
 	        // Remove Black King to simulate game over
 	        game.getBoard().getSquare(0, 4).setPiece(null); // Assume Black King is captured
@@ -39,9 +39,8 @@ class GameTest {
 	     assertTrue(game.checkGameOver(), "Game should be over when the White King is captured.");
 	}
 	
-	 @Test
-	 void testSimulateGame() {
-	     
+	@Test
+	void testSimulateGame() {	     
 	     game = new Game();
 
 	     assertTrue(game.makeMove(6, 3, 4, 3), "White Pawn should move from (6, 3) to (4, 3)"); 
@@ -58,9 +57,4 @@ class GameTest {
 	     assertTrue(game.makeMove(7, 4, 7, 3), "Black King should capture White King");
 	     assertTrue(game.checkGameOver(), "The game should be over as the White King has been captured.");
 	 }
-
-
-
-
-
 }
