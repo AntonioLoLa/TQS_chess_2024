@@ -69,4 +69,17 @@ public class Board {
             return false;
         }
     }
+    
+    public boolean hasKing(Color color) {
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                Square square = squares[row][column];
+                // Check if the square contains a piece that is a King of the specified color
+                if (square.getPiece() instanceof King && square.getPiece().getColor() == color) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
