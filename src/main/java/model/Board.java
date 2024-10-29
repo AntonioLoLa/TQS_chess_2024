@@ -22,9 +22,31 @@ public class Board {
             squares[6][column].setPiece(new Pawn(Color.WHITE));  // White pawns
         }
 
-        // Initialize other pieces
-        squares[0][3].setPiece(new Queen(Color.BLACK)); // Black queen
-        squares[7][3].setPiece(new Queen(Color.WHITE)); // White queen
+        // Initialize rooks
+        squares[0][0].setPiece(new Rook(Color.BLACK));
+        squares[0][7].setPiece(new Rook(Color.BLACK));
+        squares[7][0].setPiece(new Rook(Color.WHITE));
+        squares[7][7].setPiece(new Rook(Color.WHITE));
+
+        // Initialize knights
+        /*squares[0][1].setPiece(new Knight(Color.BLACK));
+        squares[0][6].setPiece(new Knight(Color.BLACK));
+        squares[7][1].setPiece(new Knight(Color.WHITE));
+        squares[7][6].setPiece(new Knight(Color.WHITE));*/
+
+        // Initialize bishops
+        squares[0][2].setPiece(new Bishop(Color.BLACK));
+        squares[0][5].setPiece(new Bishop(Color.BLACK));
+        squares[7][2].setPiece(new Bishop(Color.WHITE));
+        squares[7][5].setPiece(new Bishop(Color.WHITE));
+
+        // Initialize queens
+        squares[0][3].setPiece(new Queen(Color.BLACK));
+        squares[7][3].setPiece(new Queen(Color.WHITE));
+
+        // Initialize kings
+        squares[0][4].setPiece(new King(Color.BLACK));
+        squares[7][4].setPiece(new King(Color.WHITE));
     }
     
     public int getSize() {
