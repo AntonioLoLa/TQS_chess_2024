@@ -38,6 +38,13 @@ class GameTest {
 	     game.getBoard().getSquare(7, 4).setPiece(null);
 	     assertTrue(game.checkGameOver(), "Game should be over when the White King is captured.");
 	}
+	 
+	 @Test
+	 void testNotGameOver() {
+	     game.getBoard().getSquare(7, 4);
+	     game.getBoard().getSquare(0, 4);
+	     assertFalse(game.checkGameOver(), "Game should not be over.");
+	}
 	
 	@Test
 	void testSimulateGame() {	     
@@ -47,6 +54,10 @@ class GameTest {
 	     assertTrue(game.makeMove(1, 1, 3, 1), "Black Pawn should move from (1, 1) to (3, 1)"); 
 	     assertTrue(game.makeMove(6, 4, 4, 4), "White Pawn should move from (6, 4) to (4, 4)"); 
 	     assertTrue(game.makeMove(1, 2, 2, 2), "Black Pawn should move from (1, 2) to (2, 2)"); 
+	     assertFalse(game.makeMove(6, 6, -1, 6), "White Pawn can not move"); 
+	     assertFalse(game.makeMove(-1, 6, 5, 6), "White Pawn can not move"); 
+	     assertFalse(game.makeMove(-1, 6, -1, 6), "White Pawn can not move"); 
+	     assertFalse(game.makeMove(6, 6, 7, 6), "White Pawn can not move"); 
 	     assertTrue(game.makeMove(6, 6, 4, 6), "White Pawn should move from (6, 6) to (4, 6)"); 
 	     assertTrue(game.makeMove(0, 2, 2, 0), "Black Bishop should move from (0, 2) to (2, 0)"); 
 	     assertTrue(game.makeMove(4, 4, 3, 4), "White Pawn should move from (4, 4) to (3, 4)"); 
