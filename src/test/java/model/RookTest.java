@@ -55,6 +55,10 @@ class RookTest {
         friendlySquare.setPiece(new Rook(Color.WHITE)); // Another white rook
 
         assertFalse(whiteRook.validMovement(friendlySquare, board));
+        
+        Square start = board.getSquare(4, 4);
+        start.setPiece(new Rook(null));
+        assertFalse(start.getPiece().validMovement(friendlySquare, board));
     }
 
     // **White Box Tests**
@@ -78,14 +82,28 @@ class RookTest {
 
         assertFalse(whiteRook.validMovement(destination, board));
     }
+    
+    @Test
+    void testKingCannotMoveToInvalidPosition() {
+        Square start = board.getSquare(1, 0);
+        start.setPiece(blackRook);
+        Square invalid = board.getSquare(-1, 0); // Out of bounds
+        assertFalse(start.getPiece().validMovement(invalid, board));
+    }
 
     @Test
     void testRookCannotMoveOutOfBound() {
-        Square start = board.getSquare(1, 0);
+    	Square start = board.getSquare(1, 0);
         start.setPiece(new Rook(Color.BLACK));
         Square outOfBoundsDestinationRow = new Square(9, 0);
+        Square outOfBoundsDestinationRow2 = new Square(8, -1);
         Square outOfBoundsDestinationColumn = new Square(0, 9);
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 8);
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
+        start.setPiece(new Rook(null));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
     }
 }
