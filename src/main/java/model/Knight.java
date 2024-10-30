@@ -40,4 +40,9 @@ public class Knight extends Piece {
     private boolean checkInvariants() {
         return this.color != null;
     }
+
+	public void setColor(Color color) {
+		this.color = color;
+		
+	}
 }
