@@ -29,10 +29,10 @@ public class Board {
         squares[7][7].setPiece(new Rook(Color.WHITE));
 
         // Initialize knights
-        /*squares[0][1].setPiece(new Knight(Color.BLACK));
+        squares[0][1].setPiece(new Knight(Color.BLACK));
         squares[0][6].setPiece(new Knight(Color.BLACK));
         squares[7][1].setPiece(new Knight(Color.WHITE));
-        squares[7][6].setPiece(new Knight(Color.WHITE));*/
+        squares[7][6].setPiece(new Knight(Color.WHITE));
 
         // Initialize bishops
         squares[0][2].setPiece(new Bishop(Color.BLACK));
