@@ -5,15 +5,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import model.Color;
+import model.Player;
+import view.MockGameView;
 
 class GameControllerTest {
 	
 	 private GameController game;
+	 private MockGameView mockView;
+	 private GameController gameMock;
 
 	 @BeforeEach
 	 void setUp() {
+		 mockView = new MockGameView();
 	     game = new GameController();
+	     gameMock = new GameController(mockView);
 	}
 	 
 	@Test
@@ -70,4 +79,52 @@ class GameControllerTest {
 	     assertTrue(game.makeMove(7, 4, 7, 3), "Black King should capture White King");
 	     assertTrue(game.checkGameOver(), "The game should be over as the White King has been captured.");
 	 }
+	
+	 @Test
+	    void testSimulateGameWithMock() {
+	        mockView.setInputMove(new int[]{6, 3, 5, 3}); // Simulating a movement
+	        assertTrue(gameMock.makeMove(6, 3, 5, 3), "White Pawn should move from (6, 3) to (5, 3)");
+
+	        mockView.setInputMove(new int[]{1, 1, 3, 1});
+	        assertTrue(gameMock.makeMove(1, 1, 3, 1), "Black Pawn should move from (1, 1) to (3, 1)");
+
+	        mockView.displayBoard(gameMock.getBoard());
+	        mockView.displayTurn(gameMock.getActualTurn());
+	        assertNotNull(mockView.getDisplayedBoard(), "The board should be displayed.");
+	        assertNotNull(mockView.getCurrentPlayer(), "The current player should be displayed.");
+	        
+	        mockView.reset();
+	    }
+
+	 
+	 @Test
+	 void testDisplayGameOver() {
+	     Color winnerColor = game.getBoard().getSquare(0, 4).getPiece().getColor();
+	     mockView.displayGameOver(new Player(winnerColor));
+	     assertTrue(mockView.isGameOverDisplayed(), "Game over should be displayed.");
+	     assertEquals(winnerColor, mockView.getWinner().getColor(), "The winner's color should be correctly recorded.");
+	     assertEquals("Game Over! Winner: " + winnerColor, mockView.getLastDisplayedMessage(), "The last displayed message should match.");
+	 }
+
+	 @Test
+	 void testDisplayTurn() {
+	     Color currentPlayerColor = game.getActualTurn().getColor();
+	     mockView.displayTurn(new Player(currentPlayerColor));
+	     assertEquals(currentPlayerColor, mockView.getCurrentPlayer().getColor(), "The current player's color should be displayed correctly.");
+	     assertEquals("Current turn: " + currentPlayerColor, mockView.getLastDisplayedMessage(), "The last displayed message should match the current turn.");
+	 }
+
+	 @Test
+	 void testResetMethod() {
+	     mockView.displayTurn(new Player(game.getActualTurn().getColor()));
+	     mockView.displayGameOver(new Player(game.getBoard().getSquare(0, 4).getPiece().getColor()));
+	     mockView.reset();
+	     assertNull(mockView.getDisplayedBoard(), "Board should be reset to null.");
+	     assertNull(mockView.getCurrentPlayer(), "Current player should be reset to null.");
+	     assertNull(mockView.getWinner(), "Winner should be reset to null.");
+	     assertFalse(mockView.isGameOverDisplayed(), "Game over displayed status should be reset to false.");
+	     assertEquals("", mockView.getLastDisplayedMessage(), "Last displayed message should be reset to empty.");
+	     assertNull(mockView.getMoveInput(), "Input move should be reset to null.");
+	 }
+
 }

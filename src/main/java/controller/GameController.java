@@ -1,9 +1,12 @@
 package controller;
 
+import java.util.Scanner;
+
 import model.Board;
 import model.Color;
 import model.Player;
 import model.Square;
+import view.GameView;
 
 public class GameController {
     private Board board;
@@ -11,13 +14,19 @@ public class GameController {
     private Player blackPlayer;
     private Player actualTurn;
     private boolean isGameOver;
+    private GameView view;
 
-    public GameController() {
+    public GameController(GameView view) {
+    	this.view = view;
         board = new Board();
         whitePlayer = new Player(Color.WHITE);
         blackPlayer = new Player(Color.BLACK);
         actualTurn = whitePlayer;
         isGameOver = false;
+    }
+    
+    public GameController() {
+        this(null);
     }
     
     public Player getActualTurn() {
@@ -55,5 +64,39 @@ public class GameController {
             return true;
         }
         return false;
+    }
+    
+    public void startGame() {
+        Scanner scanner = new Scanner(System.in);
+        while (!isGameOver) {
+            view.displayBoard(board);
+            view.displayTurn(actualTurn);
+
+            System.out.println("Ingrese su movimiento (formato: startRow startColumn destRow destColumn):");
+            String input = scanner.nextLine();
+            String[] parts = input.split(" ");
+
+            if (parts.length == 4) {
+                try {
+                    int startRow = Integer.parseInt(parts[0]);
+                    int startColumn = Integer.parseInt(parts[1]);
+                    int destRow = Integer.parseInt(parts[2]);
+                    int destColumn = Integer.parseInt(parts[3]);
+
+                    if (makeMove(startRow, startColumn, destRow, destColumn)) {
+                        checkGameOver();
+                    } else {
+                        System.out.println("Movimiento inválido, intenta de nuevo.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada inválida, por favor ingrese números.");
+                }
+            } else {
+                System.out.println("Formato de entrada inválido, por favor ingrese cuatro números.");
+            }
+        }
+
+        scanner.close();
+        view.displayGameOver(actualTurn);
     }
 }
