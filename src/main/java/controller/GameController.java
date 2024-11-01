@@ -1,15 +1,18 @@
-package model;
+package controller;
 
-import java.util.Scanner;
+import model.Board;
+import model.Color;
+import model.Player;
+import model.Square;
 
-public class Game {
+public class GameController {
     private Board board;
     private Player whitePlayer;
     private Player blackPlayer;
     private Player actualTurn;
     private boolean isGameOver;
 
-    public Game() {
+    public GameController() {
         board = new Board();
         whitePlayer = new Player(Color.WHITE);
         blackPlayer = new Player(Color.BLACK);
@@ -47,7 +50,7 @@ public class Game {
         boolean blackKingExists = board.hasKing(Color.BLACK);
         
         if (!whiteKingExists || !blackKingExists) {
-            System.out.println((!whiteKingExists ? "Black" : "White") + " player has won.");
+            //System.out.println((!whiteKingExists ? "Black" : "White") + " player has won.");
             isGameOver = true;
             return true;
         }

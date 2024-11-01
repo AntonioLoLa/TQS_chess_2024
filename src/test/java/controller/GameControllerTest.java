@@ -1,17 +1,19 @@
-package model;
+package controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class GameTest {
+import model.Color;
+
+class GameControllerTest {
 	
-	 private Game game;
+	 private GameController game;
 
 	 @BeforeEach
 	 void setUp() {
-	     game = new Game();
+	     game = new GameController();
 	}
 	 
 	@Test
@@ -48,7 +50,7 @@ class GameTest {
 	
 	@Test
 	void testSimulateGame() {	     
-	     game = new Game();
+	     game = new GameController();
 
 	     assertTrue(game.makeMove(6, 3, 4, 3), "White Pawn should move from (6, 3) to (4, 3)"); 
 	     assertTrue(game.makeMove(1, 1, 3, 1), "Black Pawn should move from (1, 1) to (3, 1)"); 
