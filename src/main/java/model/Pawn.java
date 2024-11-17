@@ -5,6 +5,11 @@ public class Pawn extends Piece {
     public Pawn(Color color) {
         super(color);
     }
+    
+    @Override
+    public String getName() {
+        return (this.color == Color.WHITE ? "W.Pawn" : "B.Pawn");
+    }
 
 	@Override
 	public boolean validMovement(Square destination, Board board) {

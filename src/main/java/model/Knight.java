@@ -5,6 +5,11 @@ public class Knight extends Piece {
     public Knight(Color color) {
         super(color);
     }
+    
+    @Override
+    public String getName() {
+        return (this.color == Color.WHITE ? "W.Knight" : "B.Knight");
+    }
 
     @Override
     public boolean validMovement(Square destination, Board board) {

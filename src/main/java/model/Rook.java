@@ -5,6 +5,11 @@ public class Rook extends Piece {
     public Rook(Color color) {
         super(color);
     }
+    
+    @Override
+    public String getName() {
+        return (this.color == Color.WHITE ? "W.Rook" : "B.Rook");
+    }
 
     @Override
     public boolean validMovement(Square destination, Board board) {

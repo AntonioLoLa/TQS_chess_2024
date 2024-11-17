@@ -21,7 +21,7 @@ public class GameController {
         board = new Board();
         whitePlayer = new Player(Color.WHITE);
         blackPlayer = new Player(Color.BLACK);
-        actualTurn = whitePlayer;
+        actualTurn = blackPlayer;
         isGameOver = false;
     }
     

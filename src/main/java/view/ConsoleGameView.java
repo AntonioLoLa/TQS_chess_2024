@@ -2,6 +2,7 @@ package view;
 
 import model.Board;
 import model.Player;
+import model.Square;
 
 import java.util.Scanner;
 
@@ -14,7 +15,22 @@ public class ConsoleGameView implements GameView {
 
     @Override
     public void displayBoard(Board board) {
-        System.out.println(board);
+        System.out.println("  a b c d e f g h"); // Column labels
+        System.out.println("  ----------------");
+        for (int row = 7; row >= 0; row--) {
+            System.out.print((0 + row) + " "); // Row labels
+            for (int col = 0; col < 8; col++) {
+                Square square = board.getSquare(row, col);
+                if (square.isOccupied()) {
+                    System.out.print(square.getPiece().getName() + " ");
+                } else {
+                    System.out.print(". ");
+                }
+            }
+            System.out.println((0 + row)); // Repeat row label for readability
+        }
+        System.out.println("  ----------------");
+        System.out.println("  a b c d e f g h"); // Repeat column labels
     }
 
     @Override

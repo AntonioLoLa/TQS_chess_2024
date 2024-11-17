@@ -10,7 +10,7 @@ public abstract class Piece {
 
     public void setPosition(Square position) {this.position = position;}
 
-    public Square getPosition() {return position;}
+    public String getName() {return "";}
     
     public abstract boolean validMovement(Square destination, Board board);
 }

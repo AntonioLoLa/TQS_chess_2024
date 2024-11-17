@@ -5,6 +5,12 @@ public class Queen extends Piece {
     public Queen(Color color) {
         super(color);
     }
+    
+    @Override
+    public String getName() {
+        return (this.color == Color.WHITE ? "W.Queen" : "B.Queen");
+    }
+
 
     @Override
     public boolean validMovement(Square destination, Board board) {
