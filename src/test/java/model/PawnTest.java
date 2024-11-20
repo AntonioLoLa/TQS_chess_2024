@@ -22,8 +22,8 @@ class PawnTest {
     // Tests for White Pawn
     @Test
     void testPawnGetName() {
-        assertEquals(Color.WHITE, whitePawn.getColor());
-        assertEquals(Color.BLACK, blackPawn.getColor());
+        assertEquals("W.Pawn", whitePawn.getName());
+        assertEquals("B.Pawn", blackPawn.getName());
     }
     
     @Test

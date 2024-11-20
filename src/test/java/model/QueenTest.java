@@ -24,8 +24,8 @@ class QueenTest {
     // **Black Box Tests**
     @Test
     void testQueenGetName() {
-        assertEquals(Color.WHITE, whiteQueen.getColor());
-        assertEquals(Color.BLACK, blackQueen.getColor());
+        assertEquals("W.Queen", whiteQueen.getName());
+        assertEquals("B.Queen", blackQueen.getName());
     }
     
     @Test

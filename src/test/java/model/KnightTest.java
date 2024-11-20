@@ -20,8 +20,8 @@ class KnightTest {
     // **Black Box Tests**
     @Test
     void testKnightGetName() {
-        assertEquals(Color.WHITE, whiteKnight.getColor());
-        assertEquals(Color.BLACK, blackKnight.getColor());
+        assertEquals("W.Knight", whiteKnight.getName());
+        assertEquals("B.Knight", blackKnight.getName());
     }
 
     @Test

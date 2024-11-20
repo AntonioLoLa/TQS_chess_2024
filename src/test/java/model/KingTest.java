@@ -21,8 +21,8 @@ class KingTest {
     // **Black Box Tests**
     @Test
     void testKingGetName() {
-        assertEquals(Color.WHITE, whiteKing.getColor());
-        assertEquals(Color.BLACK, blackKing.getColor());
+        assertEquals("W.King", whiteKing.getName());
+        assertEquals("B.King", blackKing.getName());
     }
 
     @Test

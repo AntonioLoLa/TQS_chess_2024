@@ -20,8 +20,8 @@ class RookTest {
     // **Black Box Tests**
     @Test
     void testRookGetName() {
-        assertEquals(Color.WHITE, whiteRook.getColor());
-        assertEquals(Color.BLACK, blackRook.getColor());
+        assertEquals("W.Rook", whiteRook.getName());
+        assertEquals("B.Rook", blackRook.getName());
     }
     
     @Test

@@ -8,7 +8,7 @@ public class Bishop extends Piece {
     
     @Override
     public String getName() {
-        return (this.color == Color.WHITE ? "W.King" : "B.King");
+        return (this.color == Color.WHITE ? "W.Bishop" : "B.Bishop");
     }
 
     @Override
