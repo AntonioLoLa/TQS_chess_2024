@@ -22,6 +22,11 @@ class BishopTest {
     }
 
     // **Black Box Tests**
+    @Test
+    void testKnightGetName() {
+        assertEquals(Color.WHITE, whiteBishop.getColor());
+        assertEquals(Color.BLACK, blackBishop.getColor());
+    }
     
     @Test
     void testWhiteBishopCanMoveDiagonally() {

@@ -18,6 +18,11 @@ class KnightTest {
     }
 
     // **Black Box Tests**
+    @Test
+    void testKnightGetName() {
+        assertEquals(Color.WHITE, whiteKnight.getColor());
+        assertEquals(Color.BLACK, blackKnight.getColor());
+    }
 
     @Test
     void testBlackBoxValidLShapedMoveRowDelta2ColDelta1() {

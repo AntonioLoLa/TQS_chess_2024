@@ -8,13 +8,24 @@ import org.junit.jupiter.api.Test;
 class PawnTest {
 
     private Board board;
+    private Pawn whitePawn;
+    private Pawn blackPawn;
+
 
     @BeforeEach
     void setUp() {
         board = new Board();
+        whitePawn = new Pawn(Color.WHITE);
+        blackPawn = new Pawn(Color.BLACK);
     }
 
     // Tests for White Pawn
+    @Test
+    void testPawnGetName() {
+        assertEquals(Color.WHITE, whitePawn.getColor());
+        assertEquals(Color.BLACK, blackPawn.getColor());
+    }
+    
     @Test
     void testWhitePawnValidMovementForwardOneSquare() {
         Square start = board.getSquare(6, 0);

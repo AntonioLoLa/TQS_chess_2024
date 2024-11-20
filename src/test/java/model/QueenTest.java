@@ -22,6 +22,11 @@ class QueenTest {
     }
 
     // **Black Box Tests**
+    @Test
+    void testQueenGetName() {
+        assertEquals(Color.WHITE, whiteQueen.getColor());
+        assertEquals(Color.BLACK, blackQueen.getColor());
+    }
     
     @Test
     void testWhiteQueenCanMoveStraight() {

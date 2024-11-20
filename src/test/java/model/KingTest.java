@@ -19,6 +19,11 @@ class KingTest {
     }
     
     // **Black Box Tests**
+    @Test
+    void testKingGetName() {
+        assertEquals(Color.WHITE, whiteKing.getColor());
+        assertEquals(Color.BLACK, blackKing.getColor());
+    }
 
     @Test
     void testWhiteKingCanMoveOneSquare() {

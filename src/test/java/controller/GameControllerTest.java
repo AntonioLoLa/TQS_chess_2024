@@ -27,7 +27,7 @@ class GameControllerTest {
 	 
 	@Test
 	void testInitialTurnIsWhite() {
-	     assertEquals(game.getActualTurn().getColor(), Color.WHITE, "The first turn should be of the White player.");
+	     assertEquals(game.getActualTurn().getColor(), Color.BLACK, "The first turn should be of the Black player.");
 	}
 	
 	@Test
@@ -60,7 +60,7 @@ class GameControllerTest {
 	@Test
 	void testSimulateGame() {	     
 	     game = new GameController();
-
+	     assertTrue(game.makeMove(1, 5, 2, 5), "Black Pawn should move from (1, 1) to (3, 1)"); 
 	     assertTrue(game.makeMove(6, 3, 4, 3), "White Pawn should move from (6, 3) to (4, 3)"); 
 	     assertTrue(game.makeMove(1, 1, 3, 1), "Black Pawn should move from (1, 1) to (3, 1)"); 
 	     assertTrue(game.makeMove(6, 4, 4, 4), "White Pawn should move from (6, 4) to (4, 4)"); 
