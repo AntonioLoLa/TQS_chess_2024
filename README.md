@@ -43,7 +43,6 @@ Follow these steps to run the project locally:
   - Follow the official chess rules for all moves and captures.
 - Play against another player locally or enjoy watching game replays.
 
----
 
 ## 🎯 Roadmap
 
@@ -52,7 +51,6 @@ Planned enhancements for the future:
 - [ ] Implement online multiplayer mode.
 - [ ] Improve game animations and visual effects.
 
----
 
 ## 🛠️ Technologies Used
 
