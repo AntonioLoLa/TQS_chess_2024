@@ -100,7 +100,7 @@ class KingTest {
     @Test
     void testOutOfBound() {
         Square start = board.getSquare(1, 0);
-        start.setPiece(new King(Color.BLACK));
+        start.setPiece(new King(Color.WHITE));
         Square outOfBoundsDestinationRow = new Square(9, 0);
         Square outOfBoundsDestinationRow2 = new Square(8, -1);
         Square outOfBoundsDestinationColumn = new Square(0, 9);

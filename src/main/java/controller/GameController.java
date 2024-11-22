@@ -21,7 +21,7 @@ public class GameController {
         board = new Board();
         whitePlayer = new Player(Color.WHITE);
         blackPlayer = new Player(Color.BLACK);
-        actualTurn = blackPlayer;
+        actualTurn = whitePlayer;
         isGameOver = false;
     }
     
@@ -72,7 +72,7 @@ public class GameController {
             view.displayBoard(board);
             view.displayTurn(actualTurn);
 
-            System.out.println("Ingrese su movimiento (formato: startRow startColumn destRow destColumn):");
+            System.out.println("Enter your move (format: startRow startColumn destRow destColumn):");
             String input = scanner.nextLine();
             String[] parts = input.split(" ");
 
@@ -86,13 +86,13 @@ public class GameController {
                     if (makeMove(startRow, startColumn, destRow, destColumn)) {
                         checkGameOver();
                     } else {
-                        System.out.println("Movimiento inválido, intenta de nuevo.");
+                        System.out.println("Invalid move, please try again.");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Entrada inválida, por favor ingrese números.");
+                    System.out.println("Invalid entry, please enter numbers.");
                 }
             } else {
-                System.out.println("Formato de entrada inválido, por favor ingrese cuatro números.");
+                System.out.println("Invalid input format, please enter four numbers.");
             }
         }
 

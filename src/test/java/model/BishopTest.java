@@ -102,14 +102,14 @@ class BishopTest {
     void testBishopCannotMoveInvalidPosition() {
     	Square start = board.getSquare(1, 0);
     	start.setPiece(whiteBishop);
-    	Square invalid = board.getSquare(-1, 0); // Fuera del límite
+    	Square invalid = board.getSquare(-1, 0);
         assertFalse(start.getPiece().validMovement(invalid, board));
     }
     
     @Test
     void testOutOfBound() {
         Square start = board.getSquare(1, 0);
-        start.setPiece(new Bishop(Color.BLACK));
+        start.setPiece(new Bishop(Color.WHITE));
         Square outOfBoundsDestinationRow = new Square(9, 0);
         Square outOfBoundsDestinationRow2 = new Square(8, -1);
         Square outOfBoundsDestinationColumn = new Square(0, 9);

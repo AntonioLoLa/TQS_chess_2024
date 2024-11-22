@@ -103,54 +103,54 @@ class BoardTest {
 	                
 	                if (row == 1) {
 	                    assertTrue(square.getPiece() instanceof Pawn);
-	                    assertEquals(Color.BLACK, square.getPiece().getColor());
+	                    assertEquals(Color.WHITE, square.getPiece().getColor());
 
 	                } else if (row == 6) {
 	                    assertTrue(square.getPiece() instanceof Pawn);
-	                    assertEquals(Color.WHITE, square.getPiece().getColor());
+	                    assertEquals(Color.BLACK, square.getPiece().getColor());
 
 	                } else if (row == 0) {
 	                    if (col == 0 || col == 7) {
 	                        assertTrue(square.getPiece() instanceof Rook);
-	                        assertEquals(Color.BLACK, square.getPiece().getColor());
+	                        assertEquals(Color.WHITE, square.getPiece().getColor());
 
 	                    } else if (col == 1 || col == 6) {
 	                        assertTrue(square.getPiece() instanceof Knight);
-	                        assertEquals(Color.BLACK, square.getPiece().getColor());
+	                        assertEquals(Color.WHITE, square.getPiece().getColor());
 
 	                    } else if (col == 2 || col == 5) {
 	                        assertTrue(square.getPiece() instanceof Bishop);
-	                        assertEquals(Color.BLACK, square.getPiece().getColor());
+	                        assertEquals(Color.WHITE, square.getPiece().getColor());
 
 	                    } else if (col == 3) {
 	                        assertTrue(square.getPiece() instanceof Queen);
-	                        assertEquals(Color.BLACK, square.getPiece().getColor());
+	                        assertEquals(Color.WHITE, square.getPiece().getColor());
 
 	                    } else {
 	                        assertTrue(square.getPiece() instanceof King);
-	                        assertEquals(Color.BLACK, square.getPiece().getColor());
+	                        assertEquals(Color.WHITE, square.getPiece().getColor());
 	                    }
 
 	                } else if (row == 7) {
 	                    if (col == 0 || col == 7) {
 	                        assertTrue(square.getPiece() instanceof Rook);
-	                        assertEquals(Color.WHITE, square.getPiece().getColor());
+	                        assertEquals(Color.BLACK, square.getPiece().getColor());
 
 	                    } else if (col == 1 || col == 6) {
 	                        assertTrue(square.getPiece() instanceof Knight);
-	                        assertEquals(Color.WHITE, square.getPiece().getColor());
+	                        assertEquals(Color.BLACK, square.getPiece().getColor());
 
 	                    } else if (col == 2 || col == 5) {
 	                        assertTrue(square.getPiece() instanceof Bishop);
-	                        assertEquals(Color.WHITE, square.getPiece().getColor());
+	                        assertEquals(Color.BLACK, square.getPiece().getColor());
 
 	                    } else if (col == 3) {
 	                        assertTrue(square.getPiece() instanceof Queen);
-	                        assertEquals(Color.WHITE, square.getPiece().getColor());
+	                        assertEquals(Color.BLACK, square.getPiece().getColor());
 
 	                    } else {
 	                        assertTrue(square.getPiece() instanceof King);
-	                        assertEquals(Color.WHITE, square.getPiece().getColor());
+	                        assertEquals(Color.BLACK, square.getPiece().getColor());
 	                    }
 
 	                } else {

@@ -15,7 +15,7 @@ public class ConsoleGameView implements GameView {
 
     @Override
     public void displayBoard(Board board) {
-        System.out.println("  a b c d e f g h"); // Column labels
+        System.out.println("  0 1 2 3 4 5 6 7"); // Column labels
         System.out.println("  ----------------");
         for (int row = 7; row >= 0; row--) {
             System.out.print((0 + row) + " "); // Row labels
@@ -30,7 +30,7 @@ public class ConsoleGameView implements GameView {
             System.out.println((0 + row)); // Repeat row label for readability
         }
         System.out.println("  ----------------");
-        System.out.println("  a b c d e f g h"); // Repeat column labels
+        System.out.println("  0 1 2 3 4 5 6 7"); // Repeat column labels
     }
 
     @Override

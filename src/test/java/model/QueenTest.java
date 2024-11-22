@@ -61,7 +61,7 @@ class QueenTest {
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
         Square friendlySquare = board.getSquare(4, 7);
-        friendlySquare.setPiece(new Queen(Color.WHITE)); // Another white queen
+        friendlySquare.setPiece(new Pawn(Color.WHITE)); // Another white piece
 
         // Piece of the same color, so invalid movement
         assertFalse(whiteQueen.validMovement(friendlySquare, board));
@@ -111,14 +111,14 @@ class QueenTest {
     void testBishopCannotMoveInvalidPosition() {
     	Square start = board.getSquare(1, 0);
     	start.setPiece(whiteQueen);
-    	Square invalid = board.getSquare(-1, 0); // Fuera del límite
+    	Square invalid = board.getSquare(-1, 0);
         assertFalse(start.getPiece().validMovement(invalid, board));
     }
     
     @Test
     void testOutOfBound() {
         Square start = board.getSquare(1, 0);
-        start.setPiece(new Queen(Color.BLACK));
+        start.setPiece(new Queen(Color.WHITE));
         Square outOfBoundsDestinationRow = new Square(9, 0);
         Square outOfBoundsDestinationRow2 = new Square(8, -1);
         Square outOfBoundsDestinationColumn = new Square(0, 9);
