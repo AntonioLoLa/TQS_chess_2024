@@ -19,7 +19,7 @@ class PawnTest {
         blackPawn = new Pawn(Color.BLACK);
     }
 
-    // Tests for White Pawn
+    // Tests for Black Pawn
     @Test
     void testPawnGetName() {
         assertEquals("W.Pawn", whitePawn.getName());
@@ -92,6 +92,38 @@ class PawnTest {
         Square destination = board.getSquare(4, 0);
         assertFalse(start.getPiece().validMovement(destination, board), "Black Pawn cannot move double forward if blocked.");
     }
+    
+    @Test
+    void testBlackPawnCannotMoveForwardForBeingBlocked() {
+        Square start = board.getSquare(5, 0);
+        start.setPiece(new Pawn(Color.BLACK));
+        Square destination = board.getSquare(4, 0); 
+        destination.setPiece(new Pawn(Color.BLACK));
+        assertFalse(start.getPiece().validMovement(destination, board), "Black Pawn should not be able to move one square forward.");
+    }
+    
+    @Test
+    void testBlackPawnCannotMoveTwoForwardInDiagonal() {
+        Square start = board.getSquare(6, 0);
+        Square destination = board.getSquare(4, 1); 
+        assertFalse(start.getPiece().validMovement(destination, board), "Black Pawn should not be able to move two squares forward.");
+    }
+    
+    @Test
+    void testBlackPawnCannotMoveTwoForwardForNotBeingInStartingPosition() {
+        Square start = board.getSquare(5, 0);
+        start.setPiece(new Pawn(Color.BLACK));
+        Square destination = board.getSquare(3, 0); 
+        assertFalse(start.getPiece().validMovement(destination, board), "Black Pawn should not be able to move two squares forward.");
+    }
+    
+    @Test
+    void testBlackPawnCannotMoveTwoForwardForBeingBlockBySameColor() {
+        Square start = board.getSquare(6, 0);
+        Square destination = board.getSquare(4, 0); 
+        destination.setPiece(new Pawn(Color.WHITE));
+        assertFalse(start.getPiece().validMovement(destination, board), "Black Pawn should not be able to move two squares forward.");
+    }
 
     // Tests for White Pawn
     @Test
@@ -101,6 +133,7 @@ class PawnTest {
         Square destination = board.getSquare(2, 0); 
         assertTrue(start.getPiece().validMovement(destination, board), "White Pawn should be able to move one square forward.");
     }
+     
 
     @Test
     void testWhitePawnValidMovementForwardTwoSquares() {
@@ -159,6 +192,38 @@ class PawnTest {
         board.getSquare(2, 0).setPiece(new Pawn(Color.WHITE));
         Square destination = board.getSquare(3, 0);
         assertFalse(start.getPiece().validMovement(destination, board), "White Pawn cannot move double forward if blocked.");
+    }
+    
+    @Test
+    void testWhitePawnCannotMoveForwardForBeingBlocked() {
+        Square start = board.getSquare(3, 0);
+        start.setPiece(new Pawn(Color.WHITE));
+        Square destination = board.getSquare(4, 0); 
+        destination.setPiece(new Pawn(Color.WHITE));
+        assertFalse(start.getPiece().validMovement(destination, board), "White Pawn should not be able to move one square forward.");
+    }
+    
+    @Test
+    void testWhitePawnCannotMoveTwoForwardInDiagonal() {
+        Square start = board.getSquare(1, 0);
+        Square destination = board.getSquare(3, 1); 
+        assertFalse(start.getPiece().validMovement(destination, board), "White Pawn should not be able to move two squares forward.");
+    }
+    
+    @Test
+    void testWhitePawnCannotMoveTwoForwardForNotBeingInStartingPosition() {
+        Square start = board.getSquare(2, 0);
+        start.setPiece(new Pawn(Color.WHITE));
+        Square destination = board.getSquare(4, 0); 
+        assertFalse(start.getPiece().validMovement(destination, board), "White Pawn should not be able to move two squares forward.");
+    }
+    
+    @Test
+    void testWhitePawnCannotMoveTwoForwardForBeingBlockBySameColor() {
+        Square start = board.getSquare(1, 0);
+        Square destination = board.getSquare(3, 0); 
+        destination.setPiece(new Pawn(Color.WHITE));
+        assertFalse(start.getPiece().validMovement(destination, board), "White Pawn should not be able to move two squares forward.");
     }
     
     //Limit Cases

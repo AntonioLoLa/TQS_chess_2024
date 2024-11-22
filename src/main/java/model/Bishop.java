@@ -35,7 +35,7 @@ public class Bishop extends Piece {
             // Check if any piece blocks the path
             int currentRow = this.position.getRow() + rowStep;
             int currentCol = this.position.getColumn() + colStep;
-            while (currentRow != destination.getRow() || currentCol != destination.getColumn()) {
+            while (currentRow == currentCol && currentRow != destination.getRow()) {
                 if (board.getSquare(currentRow, currentCol).getPiece() != null) {
                     return false; // Path is blocked
                 }

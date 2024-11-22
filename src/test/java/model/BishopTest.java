@@ -35,17 +35,28 @@ class BishopTest {
         Square destination = board.getSquare(2, 2); // Move diagonally left up
 
         assertTrue(whiteBishop.validMovement(destination, board));
-    }
+        
+        origin = board.getSquare(2, 1);
+        origin.setPiece(whiteBishop);
+        destination = board.getSquare(4, 3); // Move diagonally left up
 
-    @Test
+        assertTrue(whiteBishop.validMovement(destination, board));
+    }
+    
+
+  
+
+    
+      @Test
     void testWhiteBishopCannotMoveStraight() {
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteBishop);
         Square destination = board.getSquare(5, 4); // Attempt to move straight right
 
         assertFalse(whiteBishop.validMovement(destination, board));
+       
     }
-
+     
     @Test
     void testWhiteBishopCanCaptureBlackBishop() {
         Square origin = board.getSquare(4, 4);
