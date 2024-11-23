@@ -18,8 +18,8 @@ public class Pawn extends Piece {
         }
 
         // Invariants to ensure destination is within bounds of the board
-		if ((destination.getRow() < 0 || destination.getRow() >= board.getSize()) && destination.getColumn() < 0 || 
-				destination.getColumn() >= board.getSize()) {
+		if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) && destination.getColumn() < 0 || 
+				destination.getColumn() >= board.getSizeCols()) {
 		    return false;
 		}
 

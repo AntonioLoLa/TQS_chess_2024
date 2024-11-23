@@ -91,7 +91,7 @@ class KnightTest {
     void testBlackBoxCannotMoveOutOfBoundsRowExceedsBoard() {
         Square origin = board.getSquare(1, 0);
         origin.setPiece(whiteKnight);
-        Square outOfBoundsSquare = new Square(board.getSize(), 2); // Row exceeds board size
+        Square outOfBoundsSquare = new Square(board.getSizeRows(), 2); // Row exceeds board size
 
         assertFalse(whiteKnight.validMovement(outOfBoundsSquare, board));
     }
@@ -109,7 +109,7 @@ class KnightTest {
     void testBlackBoxCannotMoveOutOfBoundsColumnExceedsBoard() {
         Square origin = board.getSquare(1, 0);
         origin.setPiece(whiteKnight);
-        Square outOfBoundsSquare = new Square(2, board.getSize()); // Column exceeds board size
+        Square outOfBoundsSquare = new Square(2, board.getSizeCols()); // Column exceeds board size
 
         assertFalse(whiteKnight.validMovement(outOfBoundsSquare, board));
     }

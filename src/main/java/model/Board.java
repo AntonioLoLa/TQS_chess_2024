@@ -1,17 +1,34 @@
 package model;
 
 public class Board {
-	private final int size = 8;
+	private int sizeRows = 8;
+	private int sizeCols = 8;
     private Square[][] squares;
 
     public Board() {
-        squares = new Square[8][8];
-        initializeBoard();
+        squares = new Square[sizeRows][sizeCols];
+        initializeBoard(sizeRows, sizeCols);
+    }
+    
+    public Board(int rows, int cols, boolean empty) {
+    	squares = new Square[rows][cols];
+    	if (empty)
+    		initializeEmptyBoard(rows, cols);
+    	else
+    		initializeBoard(rows, cols);
+    }
+    
+    public void initializeEmptyBoard(int rows, int cols) {
+    	for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < cols; column++) {
+                squares[row][column] = new Square(row, column);
+            }
+        }
     }
 
-    public void initializeBoard() {
-        for (int row = 0; row < 8; row++) {
-            for (int column = 0; column < 8; column++) {
+    public void initializeBoard(int rows, int cols) {
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < cols; column++) {
                 squares[row][column] = new Square(row, column);
             }
         }
@@ -49,15 +66,31 @@ public class Board {
         squares[7][4].setPiece(new King(Color.BLACK));
     }
     
-    public int getSize() {
-        return size;
+    public int getSizeRows() {
+        return sizeRows;
+    }
+    
+    public int getSizeCols() {
+        return sizeCols;
+    }
+    
+    public void setSizeRows(int n) {
+        this.sizeRows = n;
+    }
+    
+    public void setSizeCols(int n) {
+        this.sizeCols = n;
     }
 
     public Square getSquare(int row, int column) {
-        if (row < 0 || row >= size || column < 0 || column >= size) {
+        if (row < 0 || row >= sizeRows || column < 0 || column >= sizeCols) {
             return null; // or throw an exception
         }
         return squares[row][column];
+    }
+    
+    public Square[][] getSquares() {
+    	return squares;
     }
 
     public boolean movePiece(Square origin, Square destination) {
@@ -71,8 +104,8 @@ public class Board {
     }
     
     public boolean hasKing(Color color) {
-        for (int row = 0; row < size; row++) {
-            for (int column = 0; column < size; column++) {
+        for (int row = 0; row < sizeRows; row++) {
+            for (int column = 0; column < sizeCols; column++) {
                 Square square = squares[row][column];
                 // Check if the square contains a piece that is a King of the specified color
                 if (square.getPiece() instanceof King && square.getPiece().getColor() == color) {

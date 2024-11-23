@@ -18,8 +18,8 @@ public class Knight extends Piece {
         }
 
         // Invariant check for board bounds
-        if ((destination.getRow() < 0 || destination.getRow() >= board.getSize()) ||
-            (destination.getColumn() < 0 || destination.getColumn() >= board.getSize())) {
+        if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) ||
+            (destination.getColumn() < 0 || destination.getColumn() >= board.getSizeCols())) {
             return false;
         }
 

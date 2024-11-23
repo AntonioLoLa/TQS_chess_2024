@@ -37,4 +37,6 @@ public class Square {
     public boolean isOccupied() {
     	return piece != null;
     }
+    
+    
 }
