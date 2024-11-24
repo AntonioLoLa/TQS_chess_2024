@@ -13,6 +13,7 @@ class KingTest {
 
     @BeforeEach
     void setUp() {
+    	// Initialize a board and create two kings, one for each color.
         board = new Board();
         whiteKing = new King(Color.WHITE);
         blackKing = new King(Color.BLACK);
@@ -20,10 +21,28 @@ class KingTest {
     
     // **Black Box Tests**
     // Equivalence partitions:
-	    // Valid: Move one square
-	    // Invalid: Move two squares
-	    // Valid: Capture opponent's piece
-	    // Invalid: Capture same color piece
+	    // - Valid: Move one square in any direction
+	    //     - Limit and boundary values:
+	    //         - ((4,4),(4,5)) (horizontal move)
+	    //         - ((4,4),(5,5)) (diagonal move)
+	    //         - ((4,4),(3,4)) (vertical move)
+	    // - Invalid: Move more than one square
+	    //     - Limit and boundary values:
+	    //         - ((4,4),(4,6)) (horizontal move)
+	    //         - ((4,4),(6,6)) (diagonal move)
+	    // - Valid: Capture opponent's piece
+	    //     - Limit and boundary values:
+	    //         - ((4,4),(5,5)) where (5,5) has an enemy piece
+	    // - Invalid: Capture same color piece
+	    //     - Limit and boundary values:
+	    //         - ((4,4),(5,5)) where (5,5) has a friendly piece
+	    // - Invalid: Move out-of-bounds
+	    //     - Limit and boundary values:
+	    //         - ((1,0),(-1,0))
+	    //         - ((1,0),(9,0))
+	    //         - ((1,0),(0,9))
+	    // - Invalid: Move through pieces (king doesn't jump but still added for completeness)
+    
     @Test
     void testKingGetName() {
     	// Verify that the king's name includes its color.
@@ -116,14 +135,19 @@ class KingTest {
     	// Check that moves to out-of-bounds squares are invalid.
         Square start = board.getSquare(1, 0);
         start.setPiece(new King(Color.WHITE));
-        Square outOfBoundsDestinationRow = new Square(9, 0);
-        Square outOfBoundsDestinationRow2 = new Square(8, -1);
-        Square outOfBoundsDestinationColumn = new Square(0, 9);
-        Square outOfBoundsDestinationColumn2 = new Square(-1, 8);
+        
+        // Test out-of-bounds positions
+        Square outOfBoundsDestinationRow = new Square(9, 0); // Row out of bounds
+        Square outOfBoundsDestinationRow2 = new Square(8, -1); // Column < 0
+        Square outOfBoundsDestinationColumn = new Square(0, 9); // Column >= 8
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 8); // Row < 0
+        
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
+        
+        // Test a king with no color
         start.setPiece(new King(null));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
     }
