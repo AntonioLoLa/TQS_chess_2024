@@ -25,10 +25,26 @@ class BishopTest {
     // **Black Box Tests**
     //Equivalence partitions: 
     	//Valid: Diagonal movement
+    		//Limit and boundary values: 
+    			//((4,4),(2,2))
+    			//((2,1),(4,3))
     	//Invalid: Not diagonal movement (horizontal/vertical)
+    		//Limit and boundary values:
+    			//((4,4),(5,4))
     	//Valid: Capture other team piece
+    		//Limit and boundary values:
+    			//((4,4),(2,2)) where in (2,2) there is an enemy piece
     	//Invalid: Capture same team piece
-    
+    		//Limit and boundary values:
+				//((4,4),(2,2)) where in (2,2) there is a friendly piece
+    	//Invalid: Out-of-bounds
+			//Limit and boundary values:
+				//((1,0),(-1,0))
+				//((1,0),(9,0))
+				//((1,0),(0,9))
+    	//Invalid: Move through pieces
+    		//Limit and boundary values:
+    			//((4,4),(2,2)) with blocking square (3,3)
     @Test
     void testBishopGetName() {
         // Verify that the bishop's name includes its color.
@@ -37,7 +53,7 @@ class BishopTest {
     }
     
     @Test
-    void testWhiteBishopCanMoveDiagonally() {
+    void testBishopCanMoveDiagonally() {
         // Test valid diagonal movements for a white bishop.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteBishop);
@@ -51,7 +67,7 @@ class BishopTest {
     }
 
     @Test
-    void testWhiteBishopCannotMoveStraight() {
+    void testBishopCannotMoveStraight() {
         // Ensure that a bishop cannot move in a straight line.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteBishop);
@@ -60,7 +76,7 @@ class BishopTest {
     }
 
     @Test
-    void testWhiteBishopCanCaptureBlackBishop() {
+    void testBishopCanCaptureBlackBishop() {
         // Validate that a bishop can capture an opponent's piece.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteBishop);
@@ -70,21 +86,27 @@ class BishopTest {
     }
 
     @Test
-    void testWhiteBishopCannotCaptureSameColorPiece() {
+    void testBishopCannotCaptureSameColorPiece() {
         // Ensure that a bishop cannot capture a friendly piece.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteBishop);
         Square friendlySquare = board.getSquare(2, 2);
         friendlySquare.setPiece(new Bishop(Color.WHITE)); // Friendly bishop
         assertFalse(whiteBishop.validMovement(friendlySquare, board));
-
-        // Also test invalid movement with a bishop that has no color.
-        Square start = board.getSquare(4, 4);
-        start.setPiece(new Bishop(null));
-        assertFalse(start.getPiece().validMovement(friendlySquare, board));
     }
-
-    // **White Box Tests** - More tests to ensure 100% path coverage
+    
+    @Test
+    void testBishopCannotMoveOutOfBounds() {
+        // Ensure movement to invalid board positions is handled correctly.
+        Square start = board.getSquare(1, 0);
+        start.setPiece(whiteBishop);
+        Square invalid = board.getSquare(-1, 0); // Out-of-bounds square
+        assertFalse(start.getPiece().validMovement(invalid, board));
+        Square outOfBoundsDestinationRow = new Square(9, 0); // Row out of bounds
+        Square outOfBoundsDestinationColumn = new Square(0, 9); // Column out of bounds
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
+        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
+    }
     
     @Test
     void testBishopCannotMoveThroughPieces() {
@@ -97,6 +119,8 @@ class BishopTest {
         assertFalse(whiteBishop.validMovement(destination, board));
     }
 
+    // **White Box Tests** - More tests to ensure 100% path coverage
+
     @Test
     void testBishopCannotMoveHorizontallyOrVertically() {
         // Verify that a bishop cannot move horizontally or vertically.
@@ -105,30 +129,58 @@ class BishopTest {
 
         Square horizontalDestination = board.getSquare(4, 7); // Horizontal move
         assertFalse(whiteBishop.validMovement(horizontalDestination, board));
-
         Square verticalDestination = board.getSquare(7, 4); // Vertical move
-        assertFalse(whiteBishop.validMovement(verticalDestination, board));
+        assertFalse(whiteBishop.validMovement(verticalDestination, board));       
     }
     
     @Test
-    void testBishopCannotMoveInvalidPosition() {
-        // Ensure movement to invalid board positions is handled correctly.
-        Square start = board.getSquare(1, 0);
+    void testBishopWithoutColor() {
+
+        // Test diagonal movement with a bishop that has no color.
+        Square start = board.getSquare(4, 4);
+        Square dest = board.getSquare(2, 2);
+        start.setPiece(new Bishop(null));
+        assertFalse(start.getPiece().validMovement(dest, board));
+        
+        // Test straight movement with a bishop that has no color.
+        dest = board.getSquare(4, 2);
+        start.setPiece(new Bishop(null));
+        assertFalse(start.getPiece().validMovement(dest, board));
+    }
+    
+    @Test
+    void testBishopInvalidMoveOutOfBounds() {
+    	
+    	//This test cases ensure condition and decision coverage for check-bounds if in validMovement() function
+    	
+        // Case 1: Row < 0 and column within bounds
+        Square start = board.getSquare(2, 2);
         start.setPiece(whiteBishop);
-        Square invalid = board.getSquare(-1, 0); // Out-of-bounds square
-        assertFalse(start.getPiece().validMovement(invalid, board));
+        Square destination = new Square(-1, 5); // Row < 0
+        assertFalse(start.getPiece().validMovement(destination, board)); // Row is invalid
+        
+        // Case 2: Row within bounds and column < 0
+        destination = new Square(4, -1); // Column < 0
+        assertFalse(start.getPiece().validMovement(destination, board)); // Column is invalid
+        
+        // Case 3: Row >= board.getSizeRows() and column within bounds
+        destination = new Square(8, 4); // Row >= 8 (assuming 8x8 size)
+        assertFalse(start.getPiece().validMovement(destination, board)); // Row is invalid
+        
+        // Case 4: Row within bounds and column >= board.getSizeCols()
+        destination = new Square(4, 8); // Column >= 8 (assuming 8x8 size)
+        assertFalse(start.getPiece().validMovement(destination, board)); // Column is invalid
+        
+        // Case 5: Row out of bounds and column out of bounds (both conditions false)
+        destination = new Square(-1, 9); // Row < 0 and column >= 8
+        assertFalse(start.getPiece().validMovement(destination, board)); // Both conditions are invalid
+        
+        // Case 6: Row within bounds and column within bounds (valid move)
+        destination = new Square(4, 4); // Within bounds
+        assertTrue(start.getPiece().validMovement(destination, board)); // Valid move within bounds
     }
-    
-    @Test
-    void testOutOfBound() {
-        // Check that moves to out-of-bounds squares are invalid.
-        Square start = board.getSquare(1, 0);
-        start.setPiece(new Bishop(Color.WHITE));
-        Square outOfBoundsDestinationRow = new Square(9, 0); // Row out of bounds
-        Square outOfBoundsDestinationColumn = new Square(0, 9); // Column out of bounds
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
-    }
+
+
 
     // **Tests using Mocks**
     

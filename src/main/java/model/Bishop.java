@@ -21,7 +21,7 @@ public class Bishop extends Piece {
         }
 
         // Check if the destination is within the bounds of the board.
-        if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) && 
+        if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) || 
             destination.getColumn() < 0 || destination.getColumn() >= board.getSizeCols()) {
             return false;
         }
