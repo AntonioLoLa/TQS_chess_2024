@@ -16,15 +16,38 @@ class QueenTest {
 
     @BeforeEach
     void setUp() {
+    	// Initialize a board and create two queens, one for each color.
         board = new Board();
         whiteQueen = new Queen(Color.WHITE);
         blackQueen = new Queen(Color.BLACK);
     }
 
-    // **Black Box Tests**: Tests for expected behavior (functional tests).
-    // Equivalence Partitions:
-	    // Valid: Move straight, valid diagonal, capture opponent's piece
-	    // Invalid: Move through pieces, capture same color piece
+    // **Black Box Tests**
+    // Equivalence partitions:
+	    // - Valid: Straight movement
+	    //   - Limit and boundary values:
+	    //       - ((4,4),(4,7)) (horizontal move)
+	    //       - ((4,4),(6,4)) (vertical move)
+	    // - Valid: Diagonal movement
+	    //   - Limit and boundary values:
+	    //       - ((4,4),(2,2)) (diagonal up-left)
+	    // - Valid: Capture opponent's piece
+	    //   - Limit and boundary values:
+	    //       - ((4,4),(4,7)) where (4,7) has an enemy piece
+	    // - Invalid: Capture same-color piece
+	    //   - Limit and boundary values:
+	    //       - ((4,4),(4,7)) where (4,7) has a friendly piece
+	    // - Invalid: Out-of-bounds moves
+	    //   - Limit and boundary values:
+	    //       - ((1,0),(-1,0)) (row out-of-bounds)
+	    //       - ((1,0),(9,0)) (row out-of-bounds)
+	    //       - ((1,0),(0,9)) (column out-of-bounds)
+	    // - Invalid: Move through pieces
+	    //   - Limit and boundary values:
+	    //       - ((4,4),(4,7)) with blocking square at (4,5)
+
+
+    
     @Test
     void testQueenGetName() {
     	// Test that the Queen's name includes its color prefix
@@ -79,6 +102,15 @@ class QueenTest {
         start.setPiece(new Queen(null));
         assertFalse(start.getPiece().validMovement(friendlySquare, board));
     }
+    
+    @Test
+    void testQueenCannotMoveOutOfBounds() {
+        // Ensure movement to invalid board positions is handled correctly.
+        Square start = board.getSquare(1, 0);
+        start.setPiece(whiteQueen);
+        Square invalid = board.getSquare(-1, 0); // Row out-of-bounds
+        assertFalse(start.getPiece().validMovement(invalid, board));
+    }
 
     // **White Box Tests**: Ensures path coverage and additional checks for valid and invalid moves
     
@@ -121,28 +153,24 @@ class QueenTest {
         assertFalse(start.getPiece().validMovement(destination2, board));
     }
     
-    @Test
-    void testBishopCannotMoveInvalidPosition() {
-    	// Ensure that the queen cannot move to an invalid position.
-    	Square start = board.getSquare(1, 0);
-    	start.setPiece(whiteQueen);
-    	Square invalid = board.getSquare(-1, 0);
-        assertFalse(start.getPiece().validMovement(invalid, board));
-    }
     
     @Test
-    void testOutOfBound() {
+    void testQueenOutOfBound() {
     	// Check that moves to out-of-bounds squares are invalid.
         Square start = board.getSquare(1, 0);
-        start.setPiece(new Queen(Color.WHITE));
-        Square outOfBoundsDestinationRow = new Square(9, 0);
-        Square outOfBoundsDestinationRow2 = new Square(8, -1);
-        Square outOfBoundsDestinationColumn = new Square(0, 9);
-        Square outOfBoundsDestinationColumn2 = new Square(-1, 8);
+        start.setPiece(blackQueen);
+        
+        // Test out-of-bounds positions
+        Square outOfBoundsDestinationRow = new Square(9, 0); // Row out of bounds
+        Square outOfBoundsDestinationRow2 = new Square(8, -1); // Column < 0
+        Square outOfBoundsDestinationColumn = new Square(0, 9); // Column >= 8
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 8); // Row < 0
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
+        
+        // Test with a queen that has no color.
         start.setPiece(new Queen(null));
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
     }
