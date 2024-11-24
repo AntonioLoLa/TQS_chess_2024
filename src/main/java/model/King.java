@@ -37,10 +37,8 @@ public class King extends Piece {
             if (destinationPiece != null && destinationPiece.getColor() == this.color) {
                 return false;
             }
-
             return true;
         }
-
         // If the move is more than one square in any direction, return false
         return false;
     }

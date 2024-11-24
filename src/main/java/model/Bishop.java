@@ -15,17 +15,16 @@ public class Bishop extends Piece {
 
     @Override
     public boolean validMovement(Square destination, Board board) {
-        // Null destination is not valid.
-        if (destination == null) {   	
+    	// Invariant and pre-conditions: 
+    	// If the destination is null, the move is invalid.
+    	// Check if the destination is within the bounds of the board.
+        // If the row or column is out of range, the move is invalid.
+    	// Invalid if bishop does not have color.
+        if (destination == null || destination.getRow() < 0 
+        		|| destination.getRow() >= board.getSizeRows() || destination.getColumn() < 0 
+        		|| destination.getColumn() >= board.getSizeCols() || !checkInvariants()) {
             return false;
         }
-
-        // Check if the destination is within the bounds of the board.
-        if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) || 
-            destination.getColumn() < 0 || destination.getColumn() >= board.getSizeCols()) {
-            return false;
-        }
-
         // Calculate the absolute row and column differences between current and destination positions.
         int rowDelta = Math.abs(destination.getRow() - this.position.getRow());
         int colDelta = Math.abs(destination.getColumn() - this.position.getColumn());
@@ -53,17 +52,7 @@ public class Bishop extends Piece {
             if (destinationPiece != null && destinationPiece.getColor() == this.color) {
                 return false; 
             }
-
-            // Validate that the piece's state satisfies all invariants.
-            if (!checkInvariants()) {
-                return false;
-            }
             return true;
-        }
-
-        // If not a valid diagonal move, check invariants before returning false.
-        if (!checkInvariants()) {
-            return false;
         }
         return false;
     }
