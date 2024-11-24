@@ -21,24 +21,30 @@ class QueenTest {
         blackQueen = new Queen(Color.BLACK);
     }
 
-    // **Black Box Tests**
+    // **Black Box Tests**: Tests for expected behavior (functional tests).
+    // Equivalence Partitions:
+	    // Valid: Move straight, valid diagonal, capture opponent's piece
+	    // Invalid: Move through pieces, capture same color piece
     @Test
     void testQueenGetName() {
+    	// Test that the Queen's name includes its color prefix
         assertEquals("W.Queen", whiteQueen.getName());
         assertEquals("B.Queen", blackQueen.getName());
     }
     
     @Test
     void testWhiteQueenCanMoveStraight() {
+    	// Test that the white queen can move in a straight line.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
-        Square destination = board.getSquare(4, 7); // Move straight right
+        Square destination = board.getSquare(4, 7); // Move straight to the right
 
         assertTrue(whiteQueen.validMovement(destination, board));
     }
 
     @Test
     void testWhiteQueenCanMoveDiagonally() {
+    	// Test that the white queen can move diagonally.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
         Square destination = board.getSquare(2, 2); // Move diagonally
@@ -48,6 +54,7 @@ class QueenTest {
 
     @Test
     void testWhiteQueenCanCaptureBlackQueen() {
+    	// Test that the white queen can capture the black queen.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
         Square enemySquare = board.getSquare(4, 7);
@@ -58,6 +65,7 @@ class QueenTest {
 
     @Test
     void testWhiteQueenCannotCaptureSameColorPiece() {
+    	// Test that the white queen cannot capture a friendly piece.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
         Square friendlySquare = board.getSquare(4, 7);
@@ -66,15 +74,17 @@ class QueenTest {
         // Piece of the same color, so invalid movement
         assertFalse(whiteQueen.validMovement(friendlySquare, board));
         
+        // Test invalid movement with a queen that has no color.
         Square start = board.getSquare(4, 4);
         start.setPiece(new Queen(null));
         assertFalse(start.getPiece().validMovement(friendlySquare, board));
     }
 
-    // **White Box Tests**
+    // **White Box Tests**: Ensures path coverage and additional checks for valid and invalid moves
     
     @Test
     void testQueenCannotMoveThroughPieces() {
+    	// Ensure that the queen cannot move through a piece.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
         Square blockingSquare = board.getSquare(4, 5);
@@ -86,6 +96,7 @@ class QueenTest {
 
     @Test
     void testQueenCannotMoveDiagonallyThroughPieces() {
+    	// Ensure the queen cannot move diagonally through a piece.
         Square origin = board.getSquare(4, 4);
         origin.setPiece(whiteQueen);
         Square blockingSquare = board.getSquare(3, 5);
@@ -97,11 +108,14 @@ class QueenTest {
     
     @Test
     void testBlackQueenCannotMoveToASpecificPosition() {
+    	// Ensure the black queen cannot move to a position already occupied by a same-color piece
         Square start = board.getSquare(5, 0);
         start.setPiece(new Queen(Color.BLACK));
         Square destination = board.getSquare(3, 7);
-        destination.setPiece(new Queen(Color.BLACK));
+        destination.setPiece(new Queen(Color.BLACK));// Same-color piece at destination
         assertFalse(start.getPiece().validMovement(destination, board));
+        
+        // Ensure the black queen cannot move to a position occupied by a piece with no color.
         Square destination2 = board.getSquare(3, 7);
         destination2.setPiece(new Queen(null));
         assertFalse(start.getPiece().validMovement(destination2, board));
@@ -109,6 +123,7 @@ class QueenTest {
     
     @Test
     void testBishopCannotMoveInvalidPosition() {
+    	// Ensure that the queen cannot move to an invalid position.
     	Square start = board.getSquare(1, 0);
     	start.setPiece(whiteQueen);
     	Square invalid = board.getSquare(-1, 0);
@@ -117,6 +132,7 @@ class QueenTest {
     
     @Test
     void testOutOfBound() {
+    	// Check that moves to out-of-bounds squares are invalid.
         Square start = board.getSquare(1, 0);
         start.setPiece(new Queen(Color.WHITE));
         Square outOfBoundsDestinationRow = new Square(9, 0);
@@ -131,13 +147,11 @@ class QueenTest {
         assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
     }
 
-    // **Mock Tests**
-
+    // **Mock Tests**: Tests using mock objects for simulating specific behavior
     @Test
     void testMockWhiteQueenCanMoveStraight() {
         Queen queenMock = mock(Queen.class);
         Board boardMock = mock(Board.class);
-        Square origin = new Square(4, 4);
         Square destination = new Square(4, 7);
 
         when(queenMock.validMovement(destination, boardMock)).thenReturn(true);
@@ -150,7 +164,6 @@ class QueenTest {
     void testMockWhiteQueenCanMoveDiagonally() {
         Queen queenMock = mock(Queen.class);
         Board boardMock = mock(Board.class);
-        Square origin = new Square(4, 4);
         Square destination = new Square(2, 2);
 
         when(queenMock.validMovement(destination, boardMock)).thenReturn(true);
