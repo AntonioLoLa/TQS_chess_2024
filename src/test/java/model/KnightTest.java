@@ -12,12 +12,41 @@ class KnightTest {
 
     @BeforeEach
     void setUp() {
+        // Initialize a board and create two bishops, one for each color.
         board = new Board();
         whiteKnight = new Knight(Color.WHITE);
         blackKnight = new Knight(Color.BLACK);
     }
 
     // **Black Box Tests**
+    //Equivalence partitions:
+    	// - Valid: Valid L shaped movement RowDelta 2 ColDelta 1
+    	//	 - Limit and boundary values:
+    	//			((2,2),(4,3))
+    	// - Valid: Valid L shaped movement RowDelta 1 ColDelta 2
+    	//	 - Limit and boundary values:
+		//			((2,2),(3,4))
+    	// - Invalid: Straight movement
+    	//	 - Limit and boundary values:
+    	//			((4,4),(4,5))
+    	// - Invalid: Non-L-shaped movement
+    	//	 - Limit and boundary values:
+    	//			((2,2), (5,5))
+    	//			((2,2), (4,4))
+		//			((2,2), (3,3))
+    	// - Invalid: Destination row is negative
+    	//	 - Limit and boundary values:
+    	//			((1,0),(-1,2))
+		// - Invalid: Destination row is out-of-bounds
+		//	 - Limit and boundary values:
+		//			((1,0),(n,2)) where n is the number of rows (8)
+		// - Invalid: Destination column is negative
+		//	 - Limit and boundary values:
+		//			((1,0),(2,-1))
+		// - Invalid: Destination column is out-of-bounds
+		//	 - Limit and boundary values:
+		//			((1,0),(2,n)) where n is the number of rows (8)
+    	
     @Test
     void testKnightGetName() {
         assertEquals("W.Knight", whiteKnight.getName());
@@ -114,6 +143,9 @@ class KnightTest {
         assertFalse(whiteKnight.validMovement(outOfBoundsSquare, board));
     }
 
+  
+    // **White Box Tests** - More tests to ensure 100% path coverage
+    
     @Test
     void testNullDestination() {
         Square origin = board.getSquare(3, 3);
@@ -122,7 +154,6 @@ class KnightTest {
         assertFalse(whiteKnight.validMovement(null, board));
     }
 
-    // **White Box Tests**
 
     @Test
     void testWhiteBoxCanCaptureBlackKnight() {
