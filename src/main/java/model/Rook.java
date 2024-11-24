@@ -18,7 +18,8 @@ public class Rook extends Piece {
         }
 
         // Invariant: The destination must be within the bounds of the board
-        if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) && destination.getColumn() < 0 || 
+        if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) 
+        		&& destination.getColumn() < 0 || 
                 destination.getColumn() >= board.getSizeCols()) {
             return false;
         }
@@ -34,7 +35,8 @@ public class Rook extends Piece {
             // Check if there are pieces blocking the path
             int currentRow = this.position.getRow() + rowStep;
             int currentCol = this.position.getColumn() + colStep;
-            while (currentRow != destination.getRow() || currentCol != destination.getColumn()) {
+            while (currentRow != destination.getRow() 
+            		|| currentCol != destination.getColumn()) {
                 if (board.getSquare(currentRow, currentCol).getPiece() != null) {
                     return false; // Path is blocked
                 }

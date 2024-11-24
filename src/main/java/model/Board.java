@@ -33,10 +33,10 @@ public class Board {
             }
         }
 
-        // Initialize pieces: Example of pawns
-        for (int column = 0; column < 8; column++) {
-        	squares[1][column].setPiece(new Pawn(Color.WHITE));  // White pawns
-            squares[6][column].setPiece(new Pawn(Color.BLACK));  // Black pawns
+        // Initialize pieces
+        for (int column = 0; column < 8; column++) {//Pawns
+        	squares[1][column].setPiece(new Pawn(Color.WHITE));
+            squares[6][column].setPiece(new Pawn(Color.BLACK));
         }
 
         // Initialize rooks

@@ -18,8 +18,9 @@ public class Pawn extends Piece {
         }
 
         // Invariants to ensure destination is within bounds of the board
-		if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) && destination.getColumn() < 0 || 
-				destination.getColumn() >= board.getSizeCols()) {
+		if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) 
+				&& destination.getColumn() < 0 
+				|| destination.getColumn() >= board.getSizeCols()) {
 		    return false;
 		}
 
@@ -31,18 +32,22 @@ public class Pawn extends Piece {
             if (rowDelta == -1 && colDelta == 0 && !destination.isOccupied()) {
                 return true; // Move forward
             } else if (rowDelta == -2 && colDelta == 0 && this.position.getRow() == 6 &&
-                    !destination.isOccupied() && !board.getSquare(this.position.getRow() - 1, this.position.getColumn()).isOccupied()) {
+                    !destination.isOccupied() && !board.getSquare(this.position.getRow() - 1, 
+                    		this.position.getColumn()).isOccupied()) {
                return true; //first move
-	          } else if (rowDelta == -1 && colDelta == 1 && destination.isOccupied() && destination.getPiece().getColor() == Color.WHITE) {
+	          } else if (rowDelta == -1 && colDelta == 1 && destination.isOccupied() 
+	        		  && destination.getPiece().getColor() == Color.WHITE) {
 	                return true; // Diagonal attack
             }
         } else {
             if (rowDelta == 1 && colDelta == 0 && !destination.isOccupied()) {
                 return true; // Move forward
             } else if (rowDelta == 2 && colDelta == 0 && this.position.getRow() == 1 &&
-                    !destination.isOccupied() && !board.getSquare(this.position.getRow() + 1, this.position.getColumn()).isOccupied()) {
+                    !destination.isOccupied() && !board.getSquare(this.position.getRow() + 1, 
+                    		this.position.getColumn()).isOccupied()) {
                return true; //first move
-            } else if (rowDelta == 1 && colDelta == 1 && destination.isOccupied() && destination.getPiece().getColor() == Color.BLACK) {
+            } else if (rowDelta == 1 && colDelta == 1 && destination.isOccupied() 
+            		&& destination.getPiece().getColor() == Color.BLACK) {
                 return true; // Diagonal attack
             }
         }

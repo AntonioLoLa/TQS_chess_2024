@@ -19,7 +19,8 @@ public class Queen extends Piece {
         }
     	
         // Invariant: The destination must be within the bounds of the board
-    	if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) && destination.getColumn() < 0 || 
+    	if ((destination.getRow() < 0 || destination.getRow() >= board.getSizeRows()) 
+    			&& destination.getColumn() < 0 || 
 				destination.getColumn() >= board.getSizeCols()) {
 		    return false;
 		}
