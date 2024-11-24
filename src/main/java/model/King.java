@@ -14,7 +14,8 @@ public class King extends Piece {
 
     @Override
     public boolean validMovement(Square destination, Board board) {
-    	// Invariants: If the destination is null, the move is invalid.
+    	// Invariant and pre-conditions: 
+    	// If the destination is null, the move is invalid.
     	// Check if the destination is within the bounds of the board.
         // If the row or column is out of range, the move is invalid.
     	// Invalid if king does not have color.
