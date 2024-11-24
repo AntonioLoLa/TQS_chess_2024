@@ -1,0 +1,8 @@
+<module name="Checker">
+    <module name="TreeWalker">
+        <module name="LineLength">
+            <property name="max" value="80"/>
+            <property name="ignorePattern" value="^package .*;|^import .*;"/>
+        </module>
+    </module>
+</module>
