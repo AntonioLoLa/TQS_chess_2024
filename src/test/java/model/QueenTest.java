@@ -25,7 +25,7 @@ class QueenTest {
     // **Black Box Tests**
     // Equivalence partitions:
 	    // - Valid: Straight movement
-	    //   - Limit and boundary values:
+	    //	 - Limit and boundary values:
 	    //       - ((4,4),(4,7)) (horizontal move)
 	    //       - ((4,4),(6,4)) (vertical move)
 	    // - Valid: Diagonal movement

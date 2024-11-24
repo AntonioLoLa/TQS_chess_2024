@@ -21,31 +21,35 @@ class PawnTest {
     }
     
     // **Black Box Tests - Black Pawn**
-    // Equivalence partitions
-    	//Valid: One square forward movement
-    		//((6,0),(5,0))
-    	//Valid: Two square forward movement
-    		//((6,0), (4,0))
-    	//Valid: Can capture one square diagonal
-    		//((6,0),(5,1)) where in (5,1) there is an enemy piece
-    	//Invalid: Backwards movement
-    		//((5,0),(6,0))
-    	//Invalid: Can't capture same piece color
-    		//((5,1),(4,0)) where in (4,0) there is a same color piece
-    	//Invalid: Move diagonally without attacking
-    		//((6,0),(5,1)) where (5,1) has no piece
-    	//Invalid: Out-of-bounds movement
-    		//((6,0),(-1,0))
-    	//Invalid: Two square forward movement blocked by enemy piece
-    		//((6,0),(4,0) but in (5,0) there is an enemy piece blocking
-		//Invalid: One square forward movement blocked
-			//((6,0),(5,0) but in (5,0) there is an enemy piece blocking
-		//Invalid: Two square diagonal movement
-			//((6,0),(4,1))
-    	//Invalid: Two square forward movement without being in starting position
-    		//((5,0),(3,0))
-    	//Invalid: Forward movement blocked by same color piece
-    		//((6,0),(4,0)) but in (4,0) there is a same color piece
+    // Equivalence partitions:
+    	// - Valid: One square forward movement
+    	//      - Limit and boundary values:
+    	//          - ((6,0),(5,0))
+    	// - Valid: Two square forward movement
+    	//      - Limit and boundary values:
+    	//          - ((6,0), (4,0))
+    	// - Valid: Can capture one square diagonal
+    	//      - Limit and boundary values:
+    	//          - ((6,0),(5,1)) where in (5,1) there is an enemy piece
+    	// - Invalid: Backwards movement
+    	//      - ((5,0),(6,0))
+    	// - Invalid: Can't capture same piece color
+    	//      - ((5,1),(4,0)) where in (4,0) there is a same color piece
+    	// - Invalid: Move diagonally without attacking
+    	//      - ((6,0),(5,1)) where (5,1) has no piece
+    	// - Invalid: Out-of-bounds movement
+    	//      - ((6,0),(-1,0))
+    	// - Invalid: Two square forward movement blocked by enemy piece
+    	//      - ((6,0),(4,0) but in (5,0) there is an enemy piece blocking)
+    	// - Invalid: One square forward movement blocked
+    	//      - ((6,0),(5,0) but in (5,0) there is an enemy piece blocking)
+    	// - Invalid: Two square diagonal movement
+    	//      - ((6,0),(4,1))
+    	// - Invalid: Two square forward movement without being in starting position
+    	//      - ((5,0),(3,0))
+    	// - Invalid: Forward movement blocked by same color piece
+    	//      - ((6,0),(4,0)) but in (4,0) there is a same color piece
+
     
     
     @Test
@@ -153,32 +157,33 @@ class PawnTest {
         assertFalse(start.getPiece().validMovement(destination, board), "Black Pawn should not be able to move two squares forward.");
     }
 
-	 // **Black Box Tests - White pawn** 
-	 // Equivalence partitions 
-	     // Valid: One square forward movement 
-	         // ((1,0),(2,0)) 
-	     // Valid: Two square forward movement 
-	         // ((1,0), (3,0)) 
-	     // Valid: Can capture one square diagonal 
-	         // ((1,0),(2,1)) where in (2,1) there is an enemy piece 
-	     // Invalid: Backwards movement 
-	         // ((2,0),(1,0)) 
-	     // Invalid: Can't capture same piece color 
-	         // ((2,1),(3,0)) where in (3,0) there is a same color piece 
-	     // Invalid: Move diagonally without attacking 
-	         // ((1,0),(2,1)) where (2,1) has no piece 
-	     // Invalid: Out-of-bounds movement 
-	         // ((1,0),(8,0)) 
-	     // Invalid: Two square forward movement blocked by enemy piece 
-	         // ((1,0),(3,0)) but in (2,0) there is an enemy piece blocking 
-	     // Invalid: One square forward movement blocked 
-	         // ((3,0),(4,0)) but in (4,0) there is an enemy piece blocking 
-	     // Invalid: Two square diagonal movement 
-	         // ((1,0),(3,1)) 
-	     // Invalid: Two square forward movement without being in starting position 
-	         // ((2,0),(4,0)) 
-	     // Invalid: Forward movement blocked by same color piece 
-	         // ((1,0),(3,0)) but in (3,0) there is a same color piece
+    // **Black Box Tests - White pawn** 
+    // Equivalence partitions 
+    	// - Valid: One square forward movement 
+    	//      - ((1,0),(2,0)) 
+    	// - Valid: Two square forward movement 
+    	//      - ((1,0), (3,0)) 
+    	// - Valid: Can capture one square diagonal 
+    	//      - ((1,0),(2,1)) where in (2,1) there is an enemy piece 
+    	// - Invalid: Backwards movement 
+    	//      - ((2,0),(1,0)) 
+    	// - Invalid: Can't capture same piece color 
+    	//      - ((2,1),(3,0)) where in (3,0) there is a same color piece 
+    	// - Invalid: Move diagonally without attacking 
+    	//      - ((1,0),(2,1)) where (2,1) has no piece 
+    	// - Invalid: Out-of-bounds movement 
+    	//      - ((1,0),(8,0)) 
+    	// - Invalid: Two square forward movement blocked by enemy piece 
+    	//      - ((1,0),(3,0)) but in (2,0) there is an enemy piece blocking 
+    	// - Invalid: One square forward movement blocked 
+    	//      - ((3,0),(4,0)) but in (4,0) there is an enemy piece blocking 
+    	// - Invalid: Two square diagonal movement 
+    	//      - ((1,0),(3,1)) 
+    	// - Invalid: Two square forward movement without being in starting position 
+    	//      - ((2,0),(4,0)) 
+    	// - Invalid: Forward movement blocked by same color piece 
+    	//      - ((1,0),(3,0)) but in (3,0) there is a same color piece
+
     @Test
     void testWhitePawnValidMovementForwardOneSquare() {
         Square start = board.getSquare(1, 0);
