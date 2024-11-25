@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 
 class PlayerTest {
+	
+	// **White Box Tests**: Check getNAme to ensure 100% statement coverage
 
 	@Test
     void testPlayerColorWhite() {
@@ -17,6 +19,7 @@ class PlayerTest {
         Player blackPlayer = new Player(Color.BLACK);
         assertEquals(Color.BLACK, blackPlayer.getColor());
     }
+    
 
     @Test
     void testColorIsNotNull() {
