@@ -79,8 +79,8 @@ public class GameController {
      * @return true if the move was successfully made, false otherwise
      */
     public boolean makeMove(int startRow, int startColumn, int destRow, int destColumn) {
-        Square origin = board.getSquare(startRow, startColumn);
-        Square destination = board.getSquare(destRow, destColumn);
+        Square origin = board.getSquare(startRow, startColumn);Square destination = board.getSquare(destRow, destColumn);
+        
 
         // If both squares are valid, attempt to move the piece && can move piece
         if (origin != null && destination != null && board.movePiece(origin, destination)) {
