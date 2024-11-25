@@ -8,11 +8,35 @@ import org.junit.jupiter.api.Test;
 class BoardTest {
 
 	 private Board board;
+	 private Board emptyBoard;
+	 private Board board2;
 
 	    @BeforeEach
 	    void setUp() {
 	        board = new Board();
+	        emptyBoard = new Board();
+	        board2 = new Board(8,8,false);
 	    }
+	    
+	    // **Black Box Tests**
+	    //Equivalence partitions (ValidMove())
+	    	// - Valid: Move is possible
+	    	//	- Limit and boundary values:
+	    	//			((6,0),(5,0))
+	    	// - Valid: Move is not possible
+    		//	- Limit and boundary values:
+    		//			((6,0),(3,0))
+	    //Equivalence partitions (ValidCoordinates())
+	  		// - Valid: Coordinates are within range
+    		//	- Limit and boundary values:
+    		//			(0,0)
+	    	//			(7,7)
+    		// - Valid: Coordinates are out-of.range
+			//	- Limit and boundary values:
+			//			(-1,0)
+	    	//			(8,0)
+        	//			(0,-1)
+        	//			(0,8)
 
 	    @Test
 	    void testMovePiece_ValidMove() {
@@ -34,7 +58,7 @@ class BoardTest {
 	        assertNull(invalidDestination.getPiece());
 	    }
 
-	    // Black tests
+	   
 	    @Test
 	    void testGetSquare_ValidCoordinates() {
 	        assertNotNull(board.getSquare(0, 0));
@@ -50,6 +74,7 @@ class BoardTest {
 	    }
 
 	    // Pairwise Testing
+	    
 	    @Test
 	    void testMovePiece_Pairwise() {
 	        assertTrue(board.movePiece(board.getSquare(6, 0), board.getSquare(5, 0)));
@@ -58,7 +83,8 @@ class BoardTest {
 	        assertFalse(board.movePiece(board.getSquare(1, 0), board.getSquare(3, 0)));
 	    }
 
-	    // White tests
+	    // **White Box Tests** - More tests to ensure 100% path coverage and loop testing for method hasKing()
+	    
 	    @Test
 	    void testHasKing_WhiteKingPresent() {
 	        assertTrue(board.hasKing(Color.WHITE));
@@ -143,6 +169,8 @@ class BoardTest {
 	        }
 	    }
 	    
+	    
+	    
 	    // Loop Testing
 	    
 	    //Inner loop: 0 iterations, 1 iteration, 2 iterations, 5 iterations, 7 (n-1) iterations and 8 (n) iterations
@@ -204,6 +232,7 @@ class BoardTest {
 	        boardAux.getSquare(0, 7).setPiece(new King(Color.WHITE));
 	        assertTrue(boardAux.hasKing(Color.WHITE));
 	    }
+	   
 	    
 	    //Outer loop (usual value for inner loop = 8): 0 iterations, 1 iteration, 2 iterations, 5 iterations, 7 (n-1) iterations and 8 (n) iterations
 	    

@@ -23,28 +23,28 @@ class BishopTest {
     }
 
     // **Black Box Tests**
-    //Equivalence partitions: 
-    	//Valid: Diagonal movement
-    		//Limit and boundary values: 
-    			//((4,4),(2,2))
-    			//((2,1),(4,3))
-    	//Invalid: Not diagonal movement (horizontal/vertical)
-    		//Limit and boundary values:
-    			//((4,4),(5,4))
-    	//Valid: Capture other team piece
-    		//Limit and boundary values:
-    			//((4,4),(2,2)) where in (2,2) there is an enemy piece
-    	//Invalid: Capture same team piece
-    		//Limit and boundary values:
-				//((4,4),(2,2)) where in (2,2) there is a friendly piece
-    	//Invalid: Out-of-bounds
-			//Limit and boundary values:
-				//((1,0),(-1,0))
-				//((1,0),(9,0))
-				//((1,0),(0,9))
-    	//Invalid: Move through pieces
-    		//Limit and boundary values:
-    			//((4,4),(2,2)) with blocking square (3,3)
+    // Equivalence partitions: 
+    	// - Valid: Diagonal movement
+    	//	 - Limit and boundary values: 
+    	//			((4,4),(2,2))
+    	//			((2,1),(4,3))
+    	// - Invalid: Not diagonal movement (horizontal/vertical)
+    	//	 - Limit and boundary values:
+    	//			((4,4),(5,4))
+    	// - Valid: Capture other team piece
+    	//	 - Limit and boundary values:
+    	//			((4,4),(2,2)) where in (2,2) there is an enemy piece
+    	// - Invalid: Capture same team piece
+    	//	 - Limit and boundary values:
+		//			((4,4),(2,2)) where in (2,2) there is a friendly piece
+    	// - Invalid: Out-of-bounds
+		//	 - Limit and boundary values:
+		//			((1,0),(-1,0))
+		//			((1,0),(9,0))
+		//			((1,0),(0,9))
+    	// - Invalid: Move through pieces
+    	//	 - Limit and boundary values:
+    	//			((4,4),(2,2)) with blocking square (3,3)
     @Test
     void testBishopGetName() {
         // Verify that the bishop's name includes its color.
