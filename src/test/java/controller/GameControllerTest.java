@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import model.Color;
+import model.MockBoard;
 import model.Player;
 import view.MockGameView;
 
@@ -124,5 +125,39 @@ class GameControllerTest {
 	     assertEquals("", mockView.getLastDisplayedMessage(), "Last displayed message should be reset to empty.");
 	     assertNull(mockView.getMoveInput(), "Input move should be reset to null.");
 	 }
+	 
+	 
+	 /* Tests with Mock */
+	 
+	 @Test
+	 void testGameOverWhenWhiteKingIsCapturedWithMock() {
+	     MockBoard mockBoard = new MockBoard();
+	     GameController gameController = new GameController();
+	     gameController.setBoard(mockBoard);
+
+	     mockBoard.setKingPresence(Color.WHITE, false);
+
+	     assertTrue(gameController.checkGameOver(), "Game should be over.");
+	}
+	 
+	 @Test
+	 void testGameOverWhenBlackKingIsCapturedWithMock() {
+	     MockBoard mockBoard = new MockBoard();
+	     GameController gameController = new GameController();
+	     gameController.setBoard(mockBoard);
+
+	     mockBoard.setKingPresence(Color.BLACK, false);
+
+	     assertTrue(gameController.checkGameOver(), "Game should be over.");
+	}
+
+	@Test
+	void testValidMoveWithMockBoardWithMock() {
+	    MockBoard mockBoard = new MockBoard();
+	    GameController gameController = new GameController();
+	    gameController.setBoard(mockBoard);
+
+	    assertTrue(gameController.makeMove(0, 0, 1, 1), "Valid movement.");
+	}
 
 }
