@@ -25,6 +25,10 @@ public class GameController {
         isGameOver = false;
     }
     
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+    
     public GameController() {
         this(null);
     }
