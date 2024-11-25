@@ -20,7 +20,8 @@ public class Pawn extends Piece {
         // Check if the destination is within the bounds of the board.
         // If the row or column is out of range, the move is invalid.
         // Invalid if pawn does not have color.
-        if (destination == null || destination.getRow() < 0 || destination.getRow() >= board.getSizeRows() && destination.getColumn() < 0 
+        if (destination == null || destination.getRow() < 0 
+                || destination.getRow() >= board.getSizeRows() && destination.getColumn() < 0 
                 || destination.getColumn() >= board.getSizeCols() || !checkInvariants()) {
             return false;
         }
