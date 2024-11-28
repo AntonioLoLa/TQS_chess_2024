@@ -113,8 +113,10 @@ class PawnTest {
         Square start = board.getSquare(6, 0);
         start.setPiece(new Pawn(Color.BLACK));
         Square invalidDestination = board.getSquare(-1, 0); // Out of bound
-        assertFalse(start.getPiece().validMovement(invalidDestination, board), "Black Pawn should not move out of bounds.");
-    }
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(invalidDestination, board))
+                .getMessage().contains("Destination square cannot be null."),
+                "Error message should indicate that the column is out of bounds.");    }
 
     @Test
     void testBlackPawnDoubleForwardBlocked() {
@@ -237,10 +239,34 @@ class PawnTest {
 
     @Test
     void testWhitePawnCannotMoveToOutOfBounds() {
-        Square start = board.getSquare(1, 0);
+    	Square start = board.getSquare(1, 0);
         start.setPiece(new Pawn(Color.WHITE));
-        Square invalidDestination = board.getSquare(8, 0); 
-        assertFalse(start.getPiece().validMovement(invalidDestination, board), "White Pawn should not move out of bounds.");
+        
+        // Test out-of-bounds positions
+        Square outOfBoundsDestinationRow = new Square(9, 0); // Row out of bounds
+        Square outOfBoundsDestinationRow2 = new Square(7, -1); // Column < 0
+        Square outOfBoundsDestinationColumn = new Square(0, 9); // Column >= 8
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 7); // Row < 0
+        
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
     }
 
     @Test
@@ -301,21 +327,41 @@ class PawnTest {
     void testPawnCannotMoveInvalidPosition() {
     	Square start = board.getSquare(1, 0);
     	Square invalid = board.getSquare(-1, 0);
-        assertFalse(start.getPiece().validMovement(invalid, board));
+    	assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(invalid, board))
+                .getMessage().contains("Destination square cannot be null."),
+                "Error message should indicate that the column is out of bounds.");
     }
     
     @Test
     void testOutOfBound() {
         Square start = board.getSquare(1, 0);
         start.setPiece(new Pawn(Color.WHITE));
+        
         Square outOfBoundsDestinationRow = new Square(9, 0);
         Square outOfBoundsDestinationRow2 = new Square(8, -1);
         Square outOfBoundsDestinationColumn = new Square(0, 9);
-        Square outOfBoundsDestinationColumn2 = new Square(-1, 8);
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 7); // Row < 0
+        
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
     }
     
     @Test
@@ -325,12 +371,18 @@ class PawnTest {
         Square start = board.getSquare(6, 0);
         Square dest = board.getSquare(4, 0);
         start.setPiece(new Pawn(null));
-        assertFalse(start.getPiece().validMovement(dest, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(dest, board))
+                .getMessage().contains("Pawn's state invariant violated: color cannot be null."),
+                "Error message should indicate that the row is out of bounds.");
         
         // Test invalid movement with a pawn that has no color.
-        dest = board.getSquare(3, 0);
+        Square desti = board.getSquare(3, 0);
         start.setPiece(new Pawn(null));
-        assertFalse(start.getPiece().validMovement(dest, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(desti, board))
+                .getMessage().contains("Pawn's state invariant violated: color cannot be null."),
+                "Error message should indicate that the row is out of bounds.");
     }
     
 }

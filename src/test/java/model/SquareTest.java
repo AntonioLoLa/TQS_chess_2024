@@ -14,7 +14,7 @@ class SquareTest {
 		// - Valid: There is a piece in the square
 		//	 - Limit and boundary values: 
 		//			(3,4) where (3,4) has a queen
-
+	
 	@Test
 	void testIsOccupied() {
         Square testSquare = new Square(3,4);

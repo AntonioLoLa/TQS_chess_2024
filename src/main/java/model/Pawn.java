@@ -15,16 +15,13 @@ public class Pawn extends Piece {
 
     @Override
     public boolean validMovement(Square destination, Board board) {
-        // Invariant and pre-conditions: 
-        // If the destination is null, the move is invalid.
-        // Check if the destination is within the bounds of the board.
-        // If the row or column is out of range, the move is invalid.
-        // Invalid if pawn does not have color.
-        if (destination == null || destination.getRow() < 0 
-                || destination.getRow() >= board.getSizeRows() && destination.getColumn() < 0 
-                || destination.getColumn() >= board.getSizeCols() || !checkInvariants()) {
-            return false;
-        }
+    	// Preconditions and invariant
+        assert destination != null : "Destination square cannot be null.";
+        assert destination.getRow() >= 0 && destination.getRow() < board.getSizeRows() 
+            : "Row is out of bounds.";
+        assert destination.getColumn() >= 0 && destination.getColumn() < board.getSizeCols() 
+            : "Column is out of bounds.";
+        assert checkInvariants() : "Pawn's state invariant violated: color cannot be null.";
         
         // Basic logic for pawn movement (only forward, or diagonal attack)
         int rowDelta = destination.getRow() - this.position.getRow();

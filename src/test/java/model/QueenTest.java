@@ -64,6 +64,16 @@ class QueenTest {
 
         assertTrue(whiteQueen.validMovement(destination, board));
     }
+    
+    @Test
+    void testWhiteQueenCanMoveHorizontal() {
+    	// Test that the white queen can move in a horizontal line.
+        Square origin = board.getSquare(4, 4);
+        origin.setPiece(whiteQueen);
+        Square destination = board.getSquare(5, 4);
+
+        assertTrue(whiteQueen.validMovement(destination, board));
+    }
 
     @Test
     void testWhiteQueenCanMoveDiagonally() {
@@ -100,7 +110,10 @@ class QueenTest {
         // Test invalid movement with a queen that has no color.
         Square start = board.getSquare(4, 4);
         start.setPiece(new Queen(null));
-        assertFalse(start.getPiece().validMovement(friendlySquare, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(friendlySquare, board))
+                .getMessage().contains("Queen's state invariant violated: color cannot be null."),
+                "Error message should indicate that the row is out of bounds.");
     }
     
     @Test
@@ -109,7 +122,11 @@ class QueenTest {
         Square start = board.getSquare(1, 0);
         start.setPiece(whiteQueen);
         Square invalid = board.getSquare(-1, 0); // Row out-of-bounds
-        assertFalse(start.getPiece().validMovement(invalid, board));
+
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(invalid, board))
+                .getMessage().contains("Destination square cannot be null."),
+                "Error message should indicate that the row is out of bounds.");
     }
 
     // **White Box Tests**: Ensures path coverage and additional checks for valid and invalid moves
@@ -162,17 +179,29 @@ class QueenTest {
         
         // Test out-of-bounds positions
         Square outOfBoundsDestinationRow = new Square(9, 0); // Row out of bounds
-        Square outOfBoundsDestinationRow2 = new Square(8, -1); // Column < 0
+        Square outOfBoundsDestinationRow2 = new Square(7, -1); // Column < 0
         Square outOfBoundsDestinationColumn = new Square(0, 9); // Column >= 8
-        Square outOfBoundsDestinationColumn2 = new Square(-1, 8); // Row < 0
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
+        Square outOfBoundsDestinationColumn2 = new Square(-1, 7); // Row < 0
         
-        // Test with a queen that has no color.
-        start.setPiece(new Queen(null));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
     }
 
     // **Mock Tests**: Tests using mock objects for simulating specific behavior
