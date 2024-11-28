@@ -47,6 +47,22 @@ class KnightTest {
 		//	 - Limit and boundary values:
 		//			((1,0),(2,n)) where n is the number of rows (8)
     	
+    //For constructor, check colors
+    @Test
+    void testKnightGetColors() {
+    	// Verify that the knight's color.
+        assertEquals(Color.WHITE, whiteKnight.getColor());
+        assertEquals(Color.BLACK, blackKnight.getColor());
+    }
+    @Test
+    void testKnightGetPositionInBoard() {
+    	// Verify that the knight's initial position.
+        assertEquals(whiteKnight.getName(), board.getSquare(0, 1).getPiece().getName());
+        assertEquals(whiteKnight.getName(), board.getSquare(0, 6).getPiece().getName());
+        assertEquals(blackKnight.getName(), board.getSquare(7, 1).getPiece().getName());
+        assertEquals(blackKnight.getName(), board.getSquare(7, 6).getPiece().getName());
+    }
+    
     @Test
     void testKnightGetName() {
         assertEquals("W.Knight", whiteKnight.getName());
@@ -116,7 +132,7 @@ class KnightTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> origin.getPiece().validMovement(outOfBoundsSquare, board))
                 .getMessage().contains("out of bounds"),
-                "Error message should indicate that the column is out of bounds.");
+                "Error message should indicate that the row is out of bounds.");
     }
 
     @Test
@@ -128,7 +144,7 @@ class KnightTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> origin.getPiece().validMovement(outOfBoundsSquare, board))
                 .getMessage().contains("out of bounds"),
-                "Error message should indicate that the column is out of bounds.");
+                "Error message should indicate that the row is out of bounds.");
     }
 
     @Test
@@ -166,7 +182,7 @@ class KnightTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> origin.getPiece().validMovement(null, board))
                 .getMessage().contains("Destination square cannot be null."),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that destination cannot be null.");
     }
 
 
@@ -211,7 +227,7 @@ class KnightTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> origin.getPiece().validMovement(destination, board))
                 .getMessage().contains("Knight's state invariant violated: color cannot be null."),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that color cannot be null.");
 
     }
 }

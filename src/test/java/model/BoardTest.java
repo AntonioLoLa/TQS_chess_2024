@@ -38,6 +38,7 @@ class BoardTest {
         	//			(0,-1)
         	//			(0,8)
 
+	    // Test valid move within board boundaries
 	    @Test
 	    void testMovePiece_ValidMove() {
 	        Square origin = board.getSquare(6, 0);
@@ -48,6 +49,7 @@ class BoardTest {
 	        assertNotNull(destination.getPiece());
 	    }
 
+	    // Test invalid movement
 	    @Test
 	    void testMovePiece_InvalidMove() {
 	        Square origin = board.getSquare(6, 0);
@@ -58,13 +60,14 @@ class BoardTest {
 	        assertNull(invalidDestination.getPiece());
 	    }
 
-	   
+	 // Test valid coordinates 
 	    @Test
 	    void testGetSquare_ValidCoordinates() {
 	        assertNotNull(board.getSquare(0, 0));
 	        assertNotNull(board.getSquare(7, 7));
 	    }
 
+	 // Test invalid coordinates (out of bounds)
 	    @Test
 	    void testGetSquare_InvalidCoordinates() {
 	        assertNull(board.getSquare(-1, 0));
@@ -84,17 +87,19 @@ class BoardTest {
 	    }
 
 	    // **White Box Tests** - More tests to ensure 100% path coverage and loop testing for method hasKing()
-	    
+	 // Test for the presence of a white king
 	    @Test
 	    void testHasKing_WhiteKingPresent() {
 	        assertTrue(board.hasKing(Color.WHITE));
 	    }
 
+	 // Test for the presence of a black king
 	    @Test
 	    void testHasKing_BlackKingPresent() {
 	        assertTrue(board.hasKing(Color.BLACK));
 	    }
 
+	 // Test for the absence of kings (both colors)
 	    @Test
 	    void testHasKing_NoKingPresent() {
 	        board.getSquare(7, 4).setPiece(null);
@@ -104,6 +109,7 @@ class BoardTest {
 	        assertFalse(board.hasKing(Color.BLACK));
 	    }
 
+	    // Test board initialization with pieces in the correct positions
 	    @Test
 	    void testInitializeBoard() {
 	        for (int row = 0; row < board.getSizeRows(); row++) {

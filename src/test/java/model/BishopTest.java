@@ -45,6 +45,22 @@ class BishopTest {
     	// - Invalid: Move through pieces
     	//	 - Limit and boundary values:
     	//			((4,4),(2,2)) with blocking square (3,3)
+    //For constructor
+    @Test
+    void testBishopGetColors() {
+    	// Verify that the bishop's color.
+        assertEquals(Color.WHITE, whiteBishop.getColor());
+        assertEquals(Color.BLACK, blackBishop.getColor());
+    }
+    @Test
+    void testBishopGetPositionInBoard() {
+    	// Verify that the bishop's initial position.
+        assertEquals(whiteBishop.getName(), board.getSquare(0, 2).getPiece().getName());
+        assertEquals(whiteBishop.getName(), board.getSquare(0, 5).getPiece().getName());
+        assertEquals(blackBishop.getName(), board.getSquare(7, 2).getPiece().getName());
+        assertEquals(blackBishop.getName(), board.getSquare(7, 5).getPiece().getName());
+    }
+    
     @Test
     void testBishopGetName() {
         // Verify that the bishop's name includes its color.
@@ -108,7 +124,6 @@ class BishopTest {
         assertFalse(whiteBishop.validMovement(destination, board));
     }
 
-    // **White Box Tests** - More tests to ensure 100% path coverage
     @Test
     void testBishopCannotMoveToInvalidPosition() {
     	// Ensure the king cannot move to an invalid position.
@@ -119,9 +134,10 @@ class BishopTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(invalid, board))
                 .getMessage().contains("Destination square cannot be null."),
-                "Error message should indicate that the column is out of bounds.");
+                "Error message should indicate that destination cannot be null.");
     }
 
+    // **White Box Tests** - More tests to ensure 100% path coverage
     @Test
     void testBishopCannotMoveHorizontallyOrVertically() {
         // Verify that a bishop cannot move horizontally or vertically.
@@ -136,7 +152,6 @@ class BishopTest {
     
     @Test
     void testBishopWithoutColor() {
-
         // Test diagonal movement with a bishop that has no color.
         Square start = board.getSquare(4, 4);
         Square dest = board.getSquare(2, 2);
@@ -144,7 +159,7 @@ class BishopTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(dest, board))
                 .getMessage().contains("Bishop's state invariant violated: color cannot be null."),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that color cannot be null.");
         
         // Test straight movement with a bishop that has no color.
         Square dest2 = board.getSquare(4, 2);
@@ -152,20 +167,19 @@ class BishopTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(dest2, board))
                 .getMessage().contains("Bishop's state invariant violated: color cannot be null."),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that color cannot be null.");
     }
     
     @Test
-    void testBishopInvalidMoveOutOfBounds() {
-    	
+    void testBishopInvalidMoveOutOfBounds() {   	
     	//This test cases ensure condition and decision coverage for check-bounds if in validMovement() function
         Square start = board.getSquare(1, 0);
         start.setPiece(new Bishop(Color.WHITE));
         
-        Square outOfBoundsDestinationRow = new Square(9, 0);
-        Square outOfBoundsDestinationRow2 = new Square(7, -1);
-        Square outOfBoundsDestinationColumn = new Square(0, 9);
-        Square outOfBoundsDestinationColumn2 = new Square(-1, 7); // Row < 0
+        Square outOfBoundsDestinationRow = new Square(9, 0); // Row >= 8
+        Square outOfBoundsDestinationRow2 = new Square(-1, 7); // Row < 0
+        Square outOfBoundsDestinationColumn = new Square(0, 9); // Column >= 8
+        Square outOfBoundsDestinationColumn2 = new Square(7, -1); // Column < 0
         
         assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(outOfBoundsDestinationRow, board))
@@ -175,7 +189,7 @@ class BishopTest {
             assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(outOfBoundsDestinationRow2, board))
                 .getMessage().contains("out of bounds"),
-                "Error message should indicate that the column is out of bounds.");
+                "Error message should indicate that the row is out of bounds.");
 
             assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(outOfBoundsDestinationColumn, board))
@@ -185,10 +199,8 @@ class BishopTest {
             assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(outOfBoundsDestinationColumn2, board))
                 .getMessage().contains("out of bounds"),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that the column is out of bounds.");
     }
-
-
 
     // **Tests using Mocks**
     

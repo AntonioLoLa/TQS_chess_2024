@@ -46,7 +46,19 @@ class QueenTest {
 	    //   - Limit and boundary values:
 	    //       - ((4,4),(4,7)) with blocking square at (4,5)
 
-
+    //For constructor, check colors
+    @Test
+    void testQueenGetColors() {
+    	// Verify that the queen's color.
+        assertEquals(Color.WHITE, whiteQueen.getColor());
+        assertEquals(Color.BLACK, blackQueen.getColor());
+    }
+    @Test
+    void testQueenGetPositionInBoard() {
+    	// Verify that the queen's initial position.
+        assertEquals(whiteQueen.getName(), board.getSquare(0, 3).getPiece().getName());
+        assertEquals(blackQueen.getName(), board.getSquare(7, 3).getPiece().getName());
+    }
     
     @Test
     void testQueenGetName() {
@@ -113,7 +125,7 @@ class QueenTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(friendlySquare, board))
                 .getMessage().contains("Queen's state invariant violated: color cannot be null."),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that color cannot be null.");
     }
     
     @Test
@@ -126,7 +138,7 @@ class QueenTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(invalid, board))
                 .getMessage().contains("Destination square cannot be null."),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that destination cannot be null.");
     }
 
     // **White Box Tests**: Ensures path coverage and additional checks for valid and invalid moves
@@ -178,10 +190,10 @@ class QueenTest {
         start.setPiece(blackQueen);
         
         // Test out-of-bounds positions
-        Square outOfBoundsDestinationRow = new Square(9, 0); // Row out of bounds
-        Square outOfBoundsDestinationRow2 = new Square(7, -1); // Column < 0
+        Square outOfBoundsDestinationRow = new Square(9, 0); // Row >= 8
+        Square outOfBoundsDestinationRow2 = new Square(-1, 7); // Row < 0
         Square outOfBoundsDestinationColumn = new Square(0, 9); // Column >= 8
-        Square outOfBoundsDestinationColumn2 = new Square(-1, 7); // Row < 0
+        Square outOfBoundsDestinationColumn2 = new Square(7, -1); // Column < 0
         
         assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(outOfBoundsDestinationRow, board))
@@ -191,7 +203,7 @@ class QueenTest {
             assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(outOfBoundsDestinationRow2, board))
                 .getMessage().contains("out of bounds"),
-                "Error message should indicate that the column is out of bounds.");
+                "Error message should indicate that the row is out of bounds.");
 
             assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(outOfBoundsDestinationColumn, board))
@@ -201,7 +213,7 @@ class QueenTest {
             assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(outOfBoundsDestinationColumn2, board))
                 .getMessage().contains("out of bounds"),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that the column is out of bounds.");
     }
 
     // **Mock Tests**: Tests using mock objects for simulating specific behavior

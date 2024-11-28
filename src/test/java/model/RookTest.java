@@ -45,6 +45,22 @@ class RookTest {
     	//	- Limit and boundary values:
     	//			((4,4),(6,6))
     
+    //For constructor, check colors
+    @Test
+    void testRookGetColors() {
+    	// Verify that the rook's color.
+        assertEquals(Color.WHITE, whiteRook.getColor());
+        assertEquals(Color.BLACK, blackRook.getColor());
+    }
+    @Test
+    void testRookGetPositionInBoard() {
+    	// Verify that the rook's initial position.
+        assertEquals(whiteRook.getName(), board.getSquare(0, 0).getPiece().getName());
+        assertEquals(whiteRook.getName(), board.getSquare(0, 7).getPiece().getName());
+        assertEquals(blackRook.getName(), board.getSquare(7, 0).getPiece().getName());
+        assertEquals(blackRook.getName(), board.getSquare(7, 7).getPiece().getName());
+    }
+    
     @Test
     void testRookGetName() {
         assertEquals("W.Rook", whiteRook.getName());
@@ -94,38 +110,10 @@ class RookTest {
         assertTrue(assertThrows(AssertionError.class, 
                 () -> start.getPiece().validMovement(friendlySquare, board))
                 .getMessage().contains("Rook's state invariant violated: color cannot be null."),
-                "Error message should indicate that the row is out of bounds.");
+                "Error message should indicate that color cannot be nulls.");
     }
     
-    @Test
-    void testRookCannotMoveOutOfBound() {
-    	Square start = board.getSquare(1, 0);
-        start.setPiece(new Rook(Color.WHITE));
-        Square outOfBoundsDestinationRow = new Square(9, 0);
-        Square outOfBoundsDestinationRow2 = new Square(7, -1);
-        Square outOfBoundsDestinationColumn = new Square(0, 9);
-        Square outOfBoundsDestinationColumn2 = new Square(-1, 7); // Row < 0
-        
-        assertTrue(assertThrows(AssertionError.class, 
-                () -> start.getPiece().validMovement(outOfBoundsDestinationRow, board))
-                .getMessage().contains("out of bounds"),
-                "Error message should indicate that the row is out of bounds.");
-
-            assertTrue(assertThrows(AssertionError.class, 
-                () -> start.getPiece().validMovement(outOfBoundsDestinationRow2, board))
-                .getMessage().contains("out of bounds"),
-                "Error message should indicate that the column is out of bounds.");
-
-            assertTrue(assertThrows(AssertionError.class, 
-                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn, board))
-                .getMessage().contains("out of bounds"),
-                "Error message should indicate that the column is out of bounds.");
-
-            assertTrue(assertThrows(AssertionError.class, 
-                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn2, board))
-                .getMessage().contains("out of bounds"),
-                "Error message should indicate that the row is out of bounds.");
-    }
+    
     
     @Test
     void testRookCannotMoveThroughPieces() {
@@ -136,6 +124,17 @@ class RookTest {
         Square destination = board.getSquare(4, 7); // Attempting to move straight
 
         assertFalse(whiteRook.validMovement(destination, board));
+    }
+    
+    @Test
+    void testKingCannotMoveToInvalidPosition() {
+        Square start = board.getSquare(1, 0);
+        start.setPiece(blackRook);
+        Square invalid = board.getSquare(-1, 0); // Out of bounds
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(invalid, board))
+                .getMessage().contains("Destination square cannot be null."),
+                "Error message should indicate that destination cannot be null.");
     }
 
     @Test
@@ -149,14 +148,35 @@ class RookTest {
 
     // **White Box Tests** - More tests to ensure path coverage
       
+    
     @Test
-    void testKingCannotMoveToInvalidPosition() {
-        Square start = board.getSquare(1, 0);
-        start.setPiece(blackRook);
-        Square invalid = board.getSquare(-1, 0); // Out of bounds
+    void testRookCannotMoveOutOfBound() {
+    	Square start = board.getSquare(1, 0);
+        start.setPiece(new Rook(Color.WHITE));
+        
+        Square outOfBoundsDestinationRow = new Square(9, 0); // Row >= 8
+        Square outOfBoundsDestinationRow2 = new Square(-1, 7); // Row < 0
+        Square outOfBoundsDestinationColumn = new Square(0, 9); // Column >= 8
+        Square outOfBoundsDestinationColumn2 = new Square(7, -1); // Column < 0
+        
         assertTrue(assertThrows(AssertionError.class, 
-                () -> start.getPiece().validMovement(invalid, board))
-                .getMessage().contains("Destination square cannot be null."),
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn2, board))
+                .getMessage().contains("out of bounds"),
                 "Error message should indicate that the column is out of bounds.");
     }
 
