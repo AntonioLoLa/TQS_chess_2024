@@ -12,12 +12,12 @@ public class Square {
 
     // Constructor: initializes a square with specified row, column, and a piece.
     // Parameters:
-    // - fila: the row index of the square.
-    // - columna: the column index of the square.
+    // - row: the row index of the square.
+    // - column: the column index of the square.
     // - piece: the piece occupying the square (or null if empty).
-    public Square(int fila, int columna, Piece piece) {
-        this.row = fila;
-        this.column = columna;
+    public Square(int row, int column, Piece piece) {
+        this.row = row;
+        this.column = column;
         this.piece = piece;
     }
 

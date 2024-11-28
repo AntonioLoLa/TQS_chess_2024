@@ -15,15 +15,13 @@ public class Rook extends Piece {
 
     @Override
     public boolean validMovement(Square destination, Board board) {
-        // Invariant and pre-conditions:
-        // - The destination square must not be null.
-        // - The destination must be within the bounds of the board.
-        // - The Rook must have a valid color.
-        if (destination == null || destination.getRow() < 0
-                || destination.getRow() >= board.getSizeRows() && destination.getColumn() < 0
-                || destination.getColumn() >= board.getSizeCols() || !checkInvariants()) {
-            return false;
-        }
+    	// Preconditions and invariant
+        assert destination != null : "Destination square cannot be null.";
+        assert destination.getRow() >= 0 && destination.getRow() < board.getSizeRows() 
+            : "Row is out of bounds.";
+        assert destination.getColumn() >= 0 && destination.getColumn() < board.getSizeCols() 
+            : "Column is out of bounds.";
+        assert checkInvariants() : "Rook's state invariant violated: color cannot be null.";
 
         // Calculate the absolute row and column differences between the current position and the destination.
         int rowDelta = Math.abs(destination.getRow() - this.position.getRow());

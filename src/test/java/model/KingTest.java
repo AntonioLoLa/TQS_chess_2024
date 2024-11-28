@@ -43,6 +43,20 @@ class KingTest {
 	    //         - ((1,0),(0,9))
 	    // - Invalid: Move through pieces (king doesn't jump but still added for completeness)
     
+    //For constructor, check colors
+    @Test
+    void testKingGetColors() {
+    	// Verify that the king's color.
+        assertEquals(Color.WHITE, whiteKing.getColor());
+        assertEquals(Color.BLACK, blackKing.getColor());
+    }
+    @Test
+    void testKingGetPositionInBoard() {
+    	// Verify that the king's initial position.
+        assertEquals(whiteKing.getName(), board.getSquare(0, 4).getPiece().getName());
+        assertEquals(blackKing.getName(), board.getSquare(7, 4).getPiece().getName());
+    }
+    
     @Test
     void testKingGetName() {
     	// Verify that the king's name includes its color.
@@ -104,7 +118,23 @@ class KingTest {
         // Test invalid movement with a king that has no color.
         Square start = board.getSquare(4, 4);
         start.setPiece(new King(null));
-        assertFalse(start.getPiece().validMovement(friendlySquare, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(friendlySquare, board))
+                .getMessage().contains("King's state invariant violated: color cannot be null."),
+                "Error message should indicate that color cannot be null.");
+    }
+    
+    @Test
+    void testKingCannotMoveToInvalidPosition() {
+    	// Ensure the king cannot move to an invalid position.
+        Square start = board.getSquare(1, 0);
+        start.setPiece(whiteKing);
+        Square invalid = board.getSquare(-1, 0);
+      
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(invalid, board))
+                .getMessage().contains("Destination square cannot be null."),
+                "Error message should indicate that destination cannot be null.");
     }
     
     // **White Box Tests**
@@ -122,35 +152,35 @@ class KingTest {
     }
 
     @Test
-    void testKingCannotMoveToInvalidPosition() {
-    	// Ensure the king cannot move to an invalid position.
-        Square start = board.getSquare(1, 0);
-        start.setPiece(whiteKing);
-        Square invalid = board.getSquare(-1, 0);
-        assertFalse(start.getPiece().validMovement(invalid, board));
-    }
-
-    @Test
     void testOutOfBound() {
     	// Check that moves to out-of-bounds squares are invalid.
         Square start = board.getSquare(1, 0);
         start.setPiece(new King(Color.WHITE));
         
         // Test out-of-bounds positions
-        Square outOfBoundsDestinationRow = new Square(9, 0); // Row out of bounds
-        Square outOfBoundsDestinationRow2 = new Square(8, -1); // Column < 0
+        Square outOfBoundsDestinationRow = new Square(9, 0); // Row >= 8
+        Square outOfBoundsDestinationRow2 = new Square(-1, 7); // Row < 0
         Square outOfBoundsDestinationColumn = new Square(0, 9); // Column >= 8
-        Square outOfBoundsDestinationColumn2 = new Square(-1, 8); // Row < 0
+        Square outOfBoundsDestinationColumn2 = new Square(7, -1); // Column < 0
         
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow2, board));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationColumn2, board));
-        
-        // Test a king with no color
-        start.setPiece(new King(null));
-        assertFalse(start.getPiece().validMovement(outOfBoundsDestinationRow, board));
-    }
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
 
-   
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationRow2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+
+            assertTrue(assertThrows(AssertionError.class, 
+                () -> start.getPiece().validMovement(outOfBoundsDestinationColumn2, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
+    }
 }

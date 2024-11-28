@@ -47,6 +47,22 @@ class KnightTest {
 		//	 - Limit and boundary values:
 		//			((1,0),(2,n)) where n is the number of rows (8)
     	
+    //For constructor, check colors
+    @Test
+    void testKnightGetColors() {
+    	// Verify that the knight's color.
+        assertEquals(Color.WHITE, whiteKnight.getColor());
+        assertEquals(Color.BLACK, blackKnight.getColor());
+    }
+    @Test
+    void testKnightGetPositionInBoard() {
+    	// Verify that the knight's initial position.
+        assertEquals(whiteKnight.getName(), board.getSquare(0, 1).getPiece().getName());
+        assertEquals(whiteKnight.getName(), board.getSquare(0, 6).getPiece().getName());
+        assertEquals(blackKnight.getName(), board.getSquare(7, 1).getPiece().getName());
+        assertEquals(blackKnight.getName(), board.getSquare(7, 6).getPiece().getName());
+    }
+    
     @Test
     void testKnightGetName() {
         assertEquals("W.Knight", whiteKnight.getName());
@@ -113,7 +129,10 @@ class KnightTest {
         origin.setPiece(whiteKnight);
         Square outOfBoundsSquare = new Square(-1, 2); // Row is out of bounds (negative)
 
-        assertFalse(whiteKnight.validMovement(outOfBoundsSquare, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> origin.getPiece().validMovement(outOfBoundsSquare, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
     }
 
     @Test
@@ -122,7 +141,10 @@ class KnightTest {
         origin.setPiece(whiteKnight);
         Square outOfBoundsSquare = new Square(board.getSizeRows(), 2); // Row exceeds board size
 
-        assertFalse(whiteKnight.validMovement(outOfBoundsSquare, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> origin.getPiece().validMovement(outOfBoundsSquare, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the row is out of bounds.");
     }
 
     @Test
@@ -131,7 +153,10 @@ class KnightTest {
         origin.setPiece(whiteKnight);
         Square outOfBoundsSquare = new Square(2, -1); // Column is out of bounds (negative)
 
-        assertFalse(whiteKnight.validMovement(outOfBoundsSquare, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> origin.getPiece().validMovement(outOfBoundsSquare, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
     }
 
     @Test
@@ -140,7 +165,10 @@ class KnightTest {
         origin.setPiece(whiteKnight);
         Square outOfBoundsSquare = new Square(2, board.getSizeCols()); // Column exceeds board size
 
-        assertFalse(whiteKnight.validMovement(outOfBoundsSquare, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> origin.getPiece().validMovement(outOfBoundsSquare, board))
+                .getMessage().contains("out of bounds"),
+                "Error message should indicate that the column is out of bounds.");
     }
 
   
@@ -151,7 +179,10 @@ class KnightTest {
         Square origin = board.getSquare(3, 3);
         origin.setPiece(whiteKnight);
 
-        assertFalse(whiteKnight.validMovement(null, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> origin.getPiece().validMovement(null, board))
+                .getMessage().contains("Destination square cannot be null."),
+                "Error message should indicate that destination cannot be null.");
     }
 
 
@@ -193,9 +224,10 @@ class KnightTest {
         whiteKnight.setColor(null);
         
         Square destination = board.getSquare(6, 5);
-        assertFalse(whiteKnight.validMovement(destination, board));
+        assertTrue(assertThrows(AssertionError.class, 
+                () -> origin.getPiece().validMovement(destination, board))
+                .getMessage().contains("Knight's state invariant violated: color cannot be null."),
+                "Error message should indicate that color cannot be null.");
 
-        // Restore knight's color for further tests
-        whiteKnight.setColor(Color.WHITE);
     }
 }

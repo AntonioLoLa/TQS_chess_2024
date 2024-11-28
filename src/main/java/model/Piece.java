@@ -26,9 +26,7 @@ public abstract class Piece {
     // Returns the name of the piece as a string.
     // Default implementation returns an empty string.
     // This method should be overridden by subclasses to provide specific names (e.g., "Rook", "Bishop").
-    public String getName() {
-        return "";
-    }
+    public abstract String getName();
 
     // Abstract method: checks if the movement to the specified destination square is valid.
     // Must be implemented by each specific piece type (e.g., Rook, Bishop).

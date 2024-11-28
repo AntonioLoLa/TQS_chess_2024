@@ -14,16 +14,16 @@ class SquareTest {
 		// - Valid: There is a piece in the square
 		//	 - Limit and boundary values: 
 		//			(3,4) where (3,4) has a queen
-
+	
 	@Test
 	void testIsOccupied() {
         Square testSquare = new Square(3,4);
-        assertFalse(testSquare.isOccupied());
+        assertFalse(testSquare.isOccupied());//Not occupied
         Queen q = new Queen(Color.WHITE);
         testSquare.setPiece(q);
-        assertTrue(testSquare.isOccupied());      
+        assertTrue(testSquare.isOccupied()); //Occupied by Queen
         testSquare.setPiece(null);
-        assertFalse(testSquare.isOccupied());
+        assertFalse(testSquare.isOccupied());//Not occupied
     }
 	
     // **White Box Tests** - More tests to ensure 100% path coverage
