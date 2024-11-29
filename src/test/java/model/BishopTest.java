@@ -40,8 +40,10 @@ class BishopTest {
     	// - Invalid: Out-of-bounds
 		//	 - Limit and boundary values:
 		//			((1,0),(-1,0))
-		//			((1,0),(9,0))
-		//			((1,0),(0,9))
+	    //         - ((1,0),(9,0))
+	    //         - ((1,0),(0,9))
+		//         - ((1,0),(7,-1))
+		//         - ((1,0),(-1,7))
     	// - Invalid: Move through pieces
     	//	 - Limit and boundary values:
     	//			((4,4),(2,2)) with blocking square (3,3)
