@@ -41,6 +41,8 @@ class KingTest {
 	    //         - ((1,0),(-1,0))
 	    //         - ((1,0),(9,0))
 	    //         - ((1,0),(0,9))
+		//         - ((1,0),(7,-1))
+		//         - ((1,0),(-1,7))
 	    // - Invalid: Move through pieces (king doesn't jump but still added for completeness)
     
     //For constructor, check colors

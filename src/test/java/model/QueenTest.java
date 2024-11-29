@@ -40,8 +40,10 @@ class QueenTest {
 	    // - Invalid: Out-of-bounds moves
 	    //   - Limit and boundary values:
 	    //       - ((1,0),(-1,0)) (row out-of-bounds)
-	    //       - ((1,0),(9,0)) (row out-of-bounds)
-	    //       - ((1,0),(0,9)) (column out-of-bounds)
+	    //         - ((1,0),(9,0))
+	    //         - ((1,0),(0,9))
+		//         - ((1,0),(7,-1))
+		//         - ((1,0),(-1,7))
 	    // - Invalid: Move through pieces
 	    //   - Limit and boundary values:
 	    //       - ((4,4),(4,7)) with blocking square at (4,5)

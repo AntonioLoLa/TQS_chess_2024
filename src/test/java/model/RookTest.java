@@ -38,6 +38,10 @@ class RookTest {
     	//			((4,4),(8,-1))
     	//			((4,4),(0,9))
     	//			((1,0),(-1,8))
+	    //         - ((1,0),(9,0))
+	    //         - ((1,0),(0,9))
+		//         - ((1,0),(7,-1))
+		//         - ((1,0),(-1,7))
     	// - Invalid: Move through pieces (attempt to move through blocked path)
 		//	- Limit and boundary values:
 		//			((4,4),(4,7)) where in (4,5) there is a piece
