@@ -85,6 +85,44 @@ class GameControllerTest {
 	     assertTrue(game.checkGameOver(), "The game should be over as the Black King has been captured.");
 	 }
 	
+	@Test
+	void testStartGame() {
+	    //Simulating inputs
+		String simulatedInput = 
+			    "1 7 2 7\n" +
+			    "6 3 4 3\n" +
+			    "1 1 3 1\n" +
+			    "12 34.5 56 78\n" +
+			    "1 2\n" +
+			    "6 4 4 4\n" +
+			    "1 2 2 2\n" +
+			    "6 6 -1 6\n" +
+			    "-1 6 5 6\n" +
+			    "-1 6 -1 6\n" +
+			    "6 6 7 6\n" +
+			    "6 6 4 6\n" +
+			    "0 2 2 0\n" +
+			    "4 4 3 4\n" +
+			    "0 3 3 0\n" +
+			    "3 4 2 4\n" +
+			    "3 0 7 4\n";
+
+	    InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+	    System.setIn(inputStream);
+
+	    // Controller and view created
+	    MockGameView mockView = new MockGameView();
+	    GameController gameController = new GameController(mockView);
+
+	    // Start game
+	    gameController.startGame();
+
+	    // Check expected results
+	    assertNotNull(mockView.getDisplayedBoard(), "The board should have been displayed.");
+	    assertNotNull(mockView.getCurrentPlayer(), "The current player should have been displayed.");
+	    assertTrue(mockView.isGameOverDisplayed(), "The game over message should have been displayed.");
+	}
+	
 	
 	 // Mock View: Simulate a real game with valid and invalid movements
 	 @Test
